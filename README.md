@@ -1,8 +1,3 @@
-I’d make the README reflect what is actually in the repo today: a `robot_firmware` ESP-IDF project plus Linux developer tooling in `tools/`, with firmware modules for robot state, MPU6500 and VL53L0X drivers, HAL layers, PID/kinematics/odometry services, and FreeRTOS tasks for motor, IMU, and ToF. The setup flow installs ESP-IDF v5.4 and a Tk-based launcher for build/flash/monitor, and the config currently shows firmware version `0.1.0`, an ESP32-S2-centered setup, three ToF sensors, an MPU6500 IMU, and UART settings for a Raspberry Pi link. Apache-2.0 is the repo license. ([GitHub][1])
-
-Paste this into `README.md`:
-
-````md
 # OPEN-01
 
 **OPEN-01** is an open-source, low-cost robotics platform focused on embedded sensing, motion control, and navigation firmware.
@@ -340,11 +335,3 @@ When contributing:
 This project is licensed under the **Apache-2.0 License**.
 
 See [`LICENSE`](LICENSE) for details.
-
-```
-
-One improvement that would make this README even stronger is adding a robot photo, wiring diagram, or a short GIF right under the title.
-::contentReference[oaicite:1]{index=1}
-```
-
-[1]: https://github.com/RonishNadar/open-01 "GitHub - RonishNadar/open-01: OPEN-01 - Omnidirectional Perception & Embedded Navigation. An open-source, low-cost ROS2 robot platform. · GitHub"
