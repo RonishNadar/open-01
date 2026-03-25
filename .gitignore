@@ -39,3 +39,8 @@
 
 # debug information files
 *.dwo
+
+# Project build/config files
+robot_firmware/build/
+robot_firmware/sdkconfig
+robot_firmware/sdkconfig.*
