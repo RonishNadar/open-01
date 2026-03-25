@@ -320,7 +320,7 @@ When contributing:
 * [x] PID / kinematics / odometry services
 * [x] Linux setup script
 * [x] Python firmware launcher
-* [ ] Battery monitoring task
+* [x] Battery monitoring task
 * [ ] Comms task
 * [ ] Companion-computer bridge
 * [ ] Full system bring-up docs
