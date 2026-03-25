@@ -8,6 +8,7 @@
 #include "tasks/task_motor.h"
 #include "tasks/task_imu.h"
 #include "tasks/task_tof.h"
+#include "tasks/task_battery.h"
 
 static const char* TAG = "MAIN";
 
@@ -31,4 +32,8 @@ extern "C" void app_main(void) {
     xTaskCreatePinnedToCore(
         task_tof, "tof", STACK_TOF, NULL, PRIO_TOF, NULL, CORE_TOF);
     ESP_LOGI(TAG, "[OK] ToF task started");
+
+    xTaskCreatePinnedToCore(
+        task_battery, "battery", STACK_BATTERY, NULL, PRIO_BATTERY, NULL, CORE_BATTERY);
+    ESP_LOGI(TAG, "[OK] Battery task started");
 }

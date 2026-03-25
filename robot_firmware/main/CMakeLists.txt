@@ -7,6 +7,7 @@ idf_component_register(
         "hal/hal_motor.cpp"
         "hal/hal_imu.cpp"
         "hal/hal_tof.cpp"
+        "hal/hal_battery.cpp"
         "services/pid.cpp"
         "services/kinematic.cpp"
         "services/odometry.cpp"
@@ -14,13 +15,12 @@ idf_component_register(
         "tasks/task_motor.cpp"
         "tasks/task_imu.cpp"
         "tasks/task_tof.cpp"
+        "tasks/task_battery.cpp"
 
-        # Uncomment as implemented
-        # "hal/hal_battery.cpp"
+        # Comms (uncomment when ready)
         # "comms/comms.cpp"
         # "comms/publishers.cpp"
         # "comms/subscribers.cpp"
-        # "tasks/task_battery.cpp"
         # "tasks/task_comms.cpp"
 
     INCLUDE_DIRS

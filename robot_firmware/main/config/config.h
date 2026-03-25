@@ -36,7 +36,7 @@
 #define BATTERY_R1        10000.0f     // Top resistor (ohms)
 #define BATTERY_R2        2550.0f      // Bottom resistor (ohms)
 #define BATTERY_ADC_REF   3.3f         // ADC reference voltage
-#define BATTERY_ADC_MAX   4095.0f      // 12-bit ADC
+#define BATTERY_ADC_MAX   8191.0f   // 13-bit (ESP32-S2 default)
 #define BATTERY_CAL       0.8047f      // Calibration factor (11.82/14.69)
 #define BATTERY_SAMPLES   16           // Averaging samples
 
