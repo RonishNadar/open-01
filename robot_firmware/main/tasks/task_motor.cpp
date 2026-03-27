@@ -12,15 +12,9 @@ static const char* TAG = "TASK_MOTOR";
 
 void task_motor(void* arg) {
     ESP_LOGI(TAG, "Motor task started");
-
     ESP_ERROR_CHECK(hal_motor_init());
-
     motor_controller_t mc;
     motor_controller_init(&mc);
-
-    // TEMP: hardcoded target — replace with robot_state_get_target_vel() once comms ready
-    motor_controller_set_target(&mc, 0.2f, 0.2f);
-    ESP_LOGI(TAG, "Target: 0.2 m/s forward");
 
     TickType_t last_wake = xTaskGetTickCount();
     int64_t    last_time = esp_timer_get_time();
@@ -32,7 +26,18 @@ void task_motor(void* arg) {
         float dt    = (float)(now - last_time) / 1e6f;
         last_time   = now;
 
-        // Run PID
+        // E-stop check
+        if (robot_state_get_estop()) {
+            motor_controller_set_target(&mc, 0.0f, 0.0f);
+        } else {
+            float vx, vy, vw;
+            robot_state_get_cmd_vel(&vx, &vy, &vw);
+            // Convert twist to left/right wheel velocities
+            float left_ms  = vx - (vw * WHEEL_SEPARATION_M / 2.0f);
+            float right_ms = vx + (vw * WHEEL_SEPARATION_M / 2.0f);
+            motor_controller_set_target(&mc, left_ms, right_ms);
+        }
+
         motor_controller_update(&mc, dt);
 
         ESP_LOGI(TAG,

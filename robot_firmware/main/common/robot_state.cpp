@@ -55,6 +55,21 @@ void robot_state_set_target_vel(float left_ms, float right_ms) {
     unlock();
 }
 
+void robot_state_set_cmd_vel(float vx, float vy, float vw) {
+    xSemaphoreTake(s_mutex, portMAX_DELAY);
+    s_state.cmd_vel_x = vx;
+    s_state.cmd_vel_y = vy;
+    s_state.cmd_vel_w = vw;
+    s_state.cmd_fresh  = true;
+    xSemaphoreGive(s_mutex);
+}
+
+void robot_state_set_estop(bool val) {
+    xSemaphoreTake(s_mutex, portMAX_DELAY);
+    s_state.estop = val;
+    xSemaphoreGive(s_mutex);
+}
+
 // ── Getters ──────────────────────────────────────────────────
 void robot_state_get(robot_state_t* out) {
     lock();
@@ -91,4 +106,27 @@ void robot_state_get_target_vel(float* left_ms, float* right_ms) {
     *left_ms  = s_state.motor.target_left_ms;
     *right_ms = s_state.motor.target_right_ms;
     unlock();
+}
+
+void robot_state_get_cmd_vel(float* vx, float* vy, float* vw) {
+    lock();
+    *vx = s_state.cmd_vel_x;
+    *vy = s_state.cmd_vel_y;
+    *vw = s_state.cmd_vel_w;
+    unlock();
+}
+
+bool robot_state_get_cmd_fresh(void) {
+    lock();
+    bool val = s_state.cmd_fresh;
+    s_state.cmd_fresh = false;   // clear on read
+    unlock();
+    return val;
+}
+
+bool robot_state_get_estop(void) {
+    lock();
+    bool val = s_state.estop;
+    unlock();
+    return val;
 }

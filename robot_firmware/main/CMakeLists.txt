@@ -16,12 +16,9 @@ idf_component_register(
         "tasks/task_imu.cpp"
         "tasks/task_tof.cpp"
         "tasks/task_battery.cpp"
-
-        # Comms (uncomment when ready)
-        # "comms/comms.cpp"
-        # "comms/publishers.cpp"
-        # "comms/subscribers.cpp"
-        # "tasks/task_comms.cpp"
+        "tasks/task_comms.cpp"
+        "comms/comm_serial.cpp"
+        "comms/comm_handler.cpp"
 
     INCLUDE_DIRS
         "."

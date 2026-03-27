@@ -15,20 +15,19 @@ static const char* TAG = "TASK_IMU";
 
 void task_imu(void* arg) {
     ESP_LOGI(TAG, "IMU task started");
+    vTaskDelay(pdMS_TO_TICKS(500));
 
     // Retry init up to 5 times — handles intermittent I2C startup issues
     esp_err_t ret = ESP_FAIL;
-    for (int attempt = 1; attempt <= 5; attempt++) {
+    int attempt = 0;
+    while (ret != ESP_OK) {
+        attempt++;
         ret = hal_imu_init();
         if (ret == ESP_OK) break;
-        ESP_LOGW(TAG, "IMU init attempt %d/5 failed: %d — retrying...", attempt, ret);
-        vTaskDelay(pdMS_TO_TICKS(200));
+        ESP_LOGW(TAG, "IMU init attempt %d failed: %d — retrying...", attempt, ret);
+        vTaskDelay(pdMS_TO_TICKS(500));   // back to 200ms, was working before
     }
-    if (ret != ESP_OK) {
-        ESP_LOGE(TAG, "IMU init failed after 5 attempts — task exiting");
-        vTaskDelete(NULL);
-        return;
-    }
+    ESP_LOGI(TAG, "IMU initialized after %d attempt(s)", attempt);
 
     TickType_t last_wake = xTaskGetTickCount();
 

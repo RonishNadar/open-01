@@ -116,6 +116,17 @@ class RobotLauncher(tk.Tk):
         self.running  = False
         self.settings = load_settings()
 
+        # Live dashboard state
+        self._dash = {
+            "motor_l_tgt": "—", "motor_l_meas": "—",
+            "motor_r_tgt": "—", "motor_r_meas": "—",
+            "odom_x": "—", "odom_y": "—", "odom_th": "—",
+            "accel_x": "—", "accel_y": "—", "accel_z": "—",
+            "gyro_x":  "—", "gyro_y":  "—", "gyro_z":  "—",
+            "tof_l": "—", "tof_b": "—", "tof_r": "—",
+            "battery": "—",
+        }
+
         self._build_ui()
         self._check_idf()
         self.refresh_ports()
@@ -278,12 +289,62 @@ class RobotLauncher(tk.Tk):
                       highlightbackground=color,
                       command=cmd).grid(row=0, column=i, padx=(0, 8))
 
+        # ── Row 3.5: Live Dashboard ───────────────────────────
+        dash = tk.Frame(self, bg=COLORS["surface"],
+                        highlightthickness=1,
+                        highlightbackground=COLORS["border"])
+        dash.grid(row=4, column=0, sticky="ew", padx=16, pady=(4, 0))
+
+        def dlabel(parent, text, col, row, fg=None):
+            tk.Label(parent, text=text, font=("Courier", 10),
+                     bg=COLORS["surface"], fg=fg or COLORS["muted"],
+                     anchor="w").grid(row=row, column=col, padx=(10,2), pady=2, sticky="w")
+
+        def dval(parent, col, row, fg=None):
+            v = tk.StringVar(value="—")
+            tk.Label(parent, textvariable=v, font=("Courier", 10, "bold"),
+                     bg=COLORS["surface"], fg=fg or COLORS["text"],
+                     anchor="w", width=10).grid(row=row, column=col, padx=(0,14), pady=2, sticky="w")
+            return v
+
+        # Motor
+        dlabel(dash, "MOTOR", 0, 0, COLORS["build"])
+        dlabel(dash, "L tgt:",  0, 1); self._dv_motor_l_tgt  = dval(dash, 1, 1, COLORS["info"])
+        dlabel(dash, "L meas:", 0, 2); self._dv_motor_l_meas = dval(dash, 1, 2, COLORS["success"])
+        dlabel(dash, "R tgt:",  0, 3); self._dv_motor_r_tgt  = dval(dash, 1, 3, COLORS["info"])
+        dlabel(dash, "R meas:", 0, 4); self._dv_motor_r_meas = dval(dash, 1, 4, COLORS["success"])
+
+        # Odometry
+        dlabel(dash, "ODOM", 2, 0, COLORS["build"])
+        dlabel(dash, "x:",     2, 1); self._dv_odom_x  = dval(dash, 3, 1, COLORS["warning"])
+        dlabel(dash, "y:",     2, 2); self._dv_odom_y  = dval(dash, 3, 2, COLORS["warning"])
+        dlabel(dash, "θ:",     2, 3); self._dv_odom_th = dval(dash, 3, 3, COLORS["warning"])
+
+        # IMU
+        dlabel(dash, "IMU", 4, 0, COLORS["build"])
+        dlabel(dash, "ax:", 4, 1); self._dv_ax = dval(dash, 5, 1, COLORS["accent"])
+        dlabel(dash, "ay:", 4, 2); self._dv_ay = dval(dash, 5, 2, COLORS["accent"])
+        dlabel(dash, "az:", 4, 3); self._dv_az = dval(dash, 5, 3, COLORS["accent"])
+        dlabel(dash, "gx:", 4, 4); self._dv_gx = dval(dash, 5, 4, COLORS["muted"])
+        dlabel(dash, "gy:", 4, 5); self._dv_gy = dval(dash, 5, 5, COLORS["muted"])
+        dlabel(dash, "gz:", 4, 6); self._dv_gz = dval(dash, 5, 6, COLORS["muted"])
+
+        # ToF
+        dlabel(dash, "TOF", 6, 0, COLORS["build"])
+        dlabel(dash, "Left:",  6, 1); self._dv_tof_l = dval(dash, 7, 1, COLORS["monitor"])
+        dlabel(dash, "Back:",  6, 2); self._dv_tof_b = dval(dash, 7, 2, COLORS["monitor"])
+        dlabel(dash, "Right:", 6, 3); self._dv_tof_r = dval(dash, 7, 3, COLORS["monitor"])
+
+        # Battery
+        dlabel(dash, "BATTERY", 8, 0, COLORS["build"])
+        dlabel(dash, "Voltage:", 8, 1); self._dv_battery = dval(dash, 9, 1, COLORS["success"])
+
         # ── Row 4: Log Output ─────────────────────────────────
         log_frame = tk.Frame(self, bg=COLORS["bg"])
-        log_frame.grid(row=4, column=0, sticky="nsew", padx=16, pady=(8, 4))
+        log_frame.grid(row=5, column=0, sticky="nsew", padx=16, pady=(8, 4))
         log_frame.columnconfigure(0, weight=1)
         log_frame.rowconfigure(1, weight=1)
-        self.rowconfigure(4, weight=1)
+        self.rowconfigure(5, weight=1)
 
         tk.Label(log_frame, text="Output", font=("Courier", 10),
                  bg=COLORS["bg"], fg=COLORS["muted"]).grid(
@@ -310,7 +371,7 @@ class RobotLauncher(tk.Tk):
         foot = tk.Frame(self, bg=COLORS["surface"],
                         highlightthickness=1,
                         highlightbackground=COLORS["border"])
-        foot.grid(row=5, column=0, sticky="ew")
+        foot.grid(row=6, column=0, sticky="ew")
         foot.columnconfigure(0, weight=1)
 
         self.idf_label = tk.Label(foot, text="",
@@ -365,6 +426,52 @@ class RobotLauncher(tk.Tk):
 
     def set_status(self, text, color):
         self.status_label.config(text=f"● {text}", fg=color)
+
+    # ── Live Dashboard Parser ──────────────────────────────────
+    def _parse_line(self, line):
+        """Extract sensor values from log lines and update dashboard."""
+        import re
+
+        # TASK_MOTOR: L: tgt=  200 meas=  190 mm/s | R: tgt=  200 meas=  185 mm/s | x=0.123 y=0.045 θ=0.12
+        if "TASK_MOTOR" in line and "tgt=" in line:
+            m = re.search(
+                r'L: tgt=\s*([\d\-]+) meas=\s*([\d\-]+).*?R: tgt=\s*([\d\-]+) meas=\s*([\d\-]+).*?x=([\d\-\.]+) y=([\d\-\.]+) θ=([\d\-\.]+)',
+                line)
+            if m:
+                self._dv_motor_l_tgt .set(f"{m.group(1)} mm/s")
+                self._dv_motor_l_meas.set(f"{m.group(2)} mm/s")
+                self._dv_motor_r_tgt .set(f"{m.group(3)} mm/s")
+                self._dv_motor_r_meas.set(f"{m.group(4)} mm/s")
+                self._dv_odom_x .set(f"{m.group(5)} m")
+                self._dv_odom_y .set(f"{m.group(6)} m")
+                self._dv_odom_th.set(f"{m.group(7)} rad")
+
+        # TASK_IMU: Accel: x= -1.50 y= -0.18 z=  9.65 m/s² | Gyro:  x=  -1.5 y=   0.2 z=  -0.5 deg/s
+        elif "TASK_IMU" in line and "Accel:" in line:
+            m = re.search(
+                r'Accel:.*?x=\s*([\d\-\.]+).*?y=\s*([\d\-\.]+).*?z=\s*([\d\-\.]+).*?Gyro:.*?x=\s*([\d\-\.]+).*?y=\s*([\d\-\.]+).*?z=\s*([\d\-\.]+)',
+                line)
+            if m:
+                self._dv_ax.set(f"{m.group(1)}")
+                self._dv_ay.set(f"{m.group(2)}")
+                self._dv_az.set(f"{m.group(3)}")
+                self._dv_gx.set(f"{m.group(4)}")
+                self._dv_gy.set(f"{m.group(5)}")
+                self._dv_gz.set(f"{m.group(6)}")
+
+        # TASK_TOF: L:  968mm | B:  539mm | R:  421mm
+        elif "TASK_TOF" in line and "L:" in line and "B:" in line:
+            m = re.search(r'L:\s*([\d]+)mm.*?B:\s*([\d]+)mm.*?R:\s*([\d]+)mm', line)
+            if m:
+                self._dv_tof_l.set(f"{m.group(1)} mm")
+                self._dv_tof_b.set(f"{m.group(2)} mm")
+                self._dv_tof_r.set(f"{m.group(3)} mm")
+
+        # TASK_BATTERY: Battery: 11.23V
+        elif "TASK_BATTERY" in line and "Battery:" in line:
+            m = re.search(r'Battery:\s*([\d\.]+)V', line)
+            if m:
+                self._dv_battery.set(f"{m.group(1)} V")
 
     # ── Command Runner ─────────────────────────────────────────
     def _run(self, idf_args, label=None, post_fn=None):
@@ -423,6 +530,7 @@ class RobotLauncher(tk.Tk):
                     elif any(k in low for k in ["flash", "monitor", "connecting"]):
                         tag = "info"
                     self.after(0, self.log_line, line, tag)
+                    self.after(0, self._parse_line, line)
 
                 proc.wait()
                 rc = proc.returncode

@@ -61,7 +61,14 @@ typedef struct {
     imu_state_t     imu;
     battery_state_t battery;
     motor_state_t   motor;
-    int64_t         timestamp_us;   // esp_timer_get_time()
+    int64_t         timestamp_us;
+
+    // Written by comms task, read by motor task
+    float   cmd_vel_x;
+    float   cmd_vel_y;
+    float   cmd_vel_w;
+    bool    cmd_fresh;
+    bool    estop;
 } robot_state_t;
 
 // ── Public API ───────────────────────────────────────────────
@@ -77,6 +84,8 @@ void robot_state_set_imu(const imu_state_t* imu);
 void robot_state_set_battery(const battery_state_t* battery);
 void robot_state_set_motor(const motor_state_t* motor);
 void robot_state_set_target_vel(float left_ms, float right_ms);
+void robot_state_set_cmd_vel(float vx, float vy, float vw);
+void robot_state_set_estop(bool val);
 
 // Getters — each locks the mutex internally
 void robot_state_get(robot_state_t* out);
@@ -85,6 +94,9 @@ void robot_state_get_imu(imu_state_t* out);
 void robot_state_get_battery(battery_state_t* out);
 void robot_state_get_motor(motor_state_t* out);
 void robot_state_get_target_vel(float* left_ms, float* right_ms);
+void robot_state_get_cmd_vel(float* vx, float* vy, float* vw);
+bool robot_state_get_cmd_fresh(void);
+bool robot_state_get_estop(void);
 
 #ifdef __cplusplus
 }

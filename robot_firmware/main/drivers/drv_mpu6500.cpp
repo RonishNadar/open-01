@@ -12,7 +12,7 @@ static const char* TAG = "DRV_MPU6500";
 //  Burst reads accel + gyro in one 12-byte transaction
 // =============================================================
 
-#define I2C_TIMEOUT_MS   50
+#define I2C_TIMEOUT_MS    50
 #define I2C_TIMEOUT_TICKS pdMS_TO_TICKS(I2C_TIMEOUT_MS)
 
 // ── Low-level I2C helpers ─────────────────────────────────────
@@ -35,7 +35,6 @@ esp_err_t drv_mpu6500_init(mpu6500_accel_fs_t accel_fs,
                             mpu6500_gyro_fs_t  gyro_fs) {
     esp_err_t ret;
 
-    // Configure I2C bus
     i2c_config_t cfg = {};
     cfg.mode             = I2C_MODE_MASTER;
     cfg.sda_io_num       = MPU_SDA;
@@ -53,17 +52,19 @@ esp_err_t drv_mpu6500_init(mpu6500_accel_fs_t accel_fs,
     ret = i2c_driver_install(IMU_I2C_PORT, I2C_MODE_MASTER, 0, 0, 0);
     if (ret != ESP_OK) {
         ESP_LOGE(TAG, "I2C driver install failed: %d", ret);
+        i2c_driver_delete(IMU_I2C_PORT);
         return ret;
     }
 
-    // Small delay after bus init
-    vTaskDelay(pdMS_TO_TICKS(50));
+    // ── From here on, every early return must delete the driver ──
 
-    // WHO_AM_I check
+    vTaskDelay(pdMS_TO_TICKS(200));
+
     uint8_t who_am_i = 0;
     ret = read_regs(MPU6500_REG_WHO_AM_I, &who_am_i, 1);
     if (ret != ESP_OK) {
         ESP_LOGE(TAG, "WHO_AM_I read failed: %d", ret);
+        i2c_driver_delete(IMU_I2C_PORT);
         return ret;
     }
     if (who_am_i != MPU6500_WHO_AM_I_VAL) {
@@ -73,39 +74,28 @@ esp_err_t drv_mpu6500_init(mpu6500_accel_fs_t accel_fs,
         ESP_LOGI(TAG, "WHO_AM_I = 0x%02X OK", who_am_i);
     }
 
-    // Reset I2C bus between transactions — prevents stuck bus after read
     i2c_reset_tx_fifo(IMU_I2C_PORT);
     i2c_reset_rx_fifo(IMU_I2C_PORT);
     vTaskDelay(pdMS_TO_TICKS(20));
 
-    // Wake up — clear sleep bit, use PLL clock
-    ret = write_reg(MPU6500_REG_PWR_MGMT_1, 0x01);
-    if (ret != ESP_OK) { ESP_LOGE(TAG, "PWR_MGMT_1 failed"); return ret; }
+    #define IMU_CHECK(x, msg) \
+        ret = (x); \
+        if (ret != ESP_OK) { \
+            ESP_LOGE(TAG, msg " failed"); \
+            i2c_driver_delete(IMU_I2C_PORT); \
+            return ret; \
+        }
+
+    IMU_CHECK(write_reg(MPU6500_REG_PWR_MGMT_1,   0x01), "PWR_MGMT_1")
     vTaskDelay(pdMS_TO_TICKS(10));
+    IMU_CHECK(write_reg(MPU6500_REG_PWR_MGMT_2,   0x00), "PWR_MGMT_2")
+    IMU_CHECK(write_reg(MPU6500_REG_SMPLRT_DIV,   0x00), "SMPLRT_DIV")
+    IMU_CHECK(write_reg(MPU6500_REG_CONFIG,        0x02), "CONFIG")
+    IMU_CHECK(write_reg(MPU6500_REG_GYRO_CONFIG,   (uint8_t)(gyro_fs << 3)), "GYRO_CONFIG")
+    IMU_CHECK(write_reg(MPU6500_REG_ACCEL_CONFIG,  (uint8_t)(accel_fs << 3)), "ACCEL_CONFIG")
+    IMU_CHECK(write_reg(MPU6500_REG_ACCEL_CONFIG2, 0x02), "ACCEL_CONFIG2")
 
-    // Enable all axes
-    ret = write_reg(MPU6500_REG_PWR_MGMT_2, 0x00);
-    if (ret != ESP_OK) { ESP_LOGE(TAG, "PWR_MGMT_2 failed"); return ret; }
-
-    // Sample rate divider — 0 = run at full gyro rate (1kHz)
-    ret = write_reg(MPU6500_REG_SMPLRT_DIV, 0x00);
-    if (ret != ESP_OK) { ESP_LOGE(TAG, "SMPLRT_DIV failed"); return ret; }
-
-    // DLPF config — 92Hz bandwidth (smooth but responsive)
-    ret = write_reg(MPU6500_REG_CONFIG, 0x02);
-    if (ret != ESP_OK) { ESP_LOGE(TAG, "CONFIG failed"); return ret; }
-
-    // Gyro full scale
-    ret = write_reg(MPU6500_REG_GYRO_CONFIG, (uint8_t)(gyro_fs << 3));
-    if (ret != ESP_OK) { ESP_LOGE(TAG, "GYRO_CONFIG failed"); return ret; }
-
-    // Accel full scale
-    ret = write_reg(MPU6500_REG_ACCEL_CONFIG, (uint8_t)(accel_fs << 3));
-    if (ret != ESP_OK) { ESP_LOGE(TAG, "ACCEL_CONFIG failed"); return ret; }
-
-    // Accel DLPF — 99Hz
-    ret = write_reg(MPU6500_REG_ACCEL_CONFIG2, 0x02);
-    if (ret != ESP_OK) { ESP_LOGE(TAG, "ACCEL_CONFIG2 failed"); return ret; }
+    #undef IMU_CHECK
 
     ESP_LOGI(TAG, "MPU6500 initialized (accel=±%dg gyro=±%ddeg/s)",
              2 << accel_fs, 250 << gyro_fs);
