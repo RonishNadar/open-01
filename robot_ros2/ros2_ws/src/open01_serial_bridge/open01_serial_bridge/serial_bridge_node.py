@@ -50,7 +50,7 @@ SUB_TIMESTAMP = 0x05   # 4B:  uint32 ms
 
 # ─── CRC16-CCITT ───────────────────────────────────────────────────────────────
 
-def crc16_ccitt(data: bytes, init: int = 0xFFFF) -> int:
+def crc16_ccitt(data: bytes, init: int = 0x0000) -> int:
     """CRC16-CCITT (poly=0x1021). Matches ESP32 firmware implementation."""
     crc = init
     for byte in data:
@@ -424,7 +424,7 @@ class SerialBridgeNode(Node):
             self._tf_broadcaster.sendTransform(tf)
 
     def _publish_tof(self, data, stamp):
-        left_mm, back_mm, right_mm = data
+        left_mm, right_mm, back_mm = data
 
         def make_range(frame_id, range_m):
             msg = Range()

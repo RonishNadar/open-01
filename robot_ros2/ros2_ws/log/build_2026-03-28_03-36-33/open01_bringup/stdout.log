@@ -1,0 +1,22 @@
+running develop
+running egg_info
+creating open01_bringup.egg-info
+writing open01_bringup.egg-info/PKG-INFO
+writing dependency_links to open01_bringup.egg-info/dependency_links.txt
+writing requirements to open01_bringup.egg-info/requires.txt
+writing top-level names to open01_bringup.egg-info/top_level.txt
+writing manifest file 'open01_bringup.egg-info/SOURCES.txt'
+reading manifest file 'open01_bringup.egg-info/SOURCES.txt'
+writing manifest file 'open01_bringup.egg-info/SOURCES.txt'
+running build_ext
+Creating /home/ubuntu/open-01/robot_ros2/ros2_ws/install/open01_bringup/lib/python3.12/site-packages/open01-bringup.egg-link (link to .)
+
+Installed /home/ubuntu/open-01/robot_ros2/ros2_ws/build/open01_bringup
+running symlink_data
+creating /home/ubuntu/open-01/robot_ros2/ros2_ws/install/open01_bringup/share/ament_index
+creating /home/ubuntu/open-01/robot_ros2/ros2_ws/install/open01_bringup/share/ament_index/resource_index
+creating /home/ubuntu/open-01/robot_ros2/ros2_ws/install/open01_bringup/share/ament_index/resource_index/packages
+symbolically linking /home/ubuntu/open-01/robot_ros2/ros2_ws/build/open01_bringup/resource/open01_bringup -> /home/ubuntu/open-01/robot_ros2/ros2_ws/install/open01_bringup/share/ament_index/resource_index/packages
+symbolically linking /home/ubuntu/open-01/robot_ros2/ros2_ws/build/open01_bringup/package.xml -> /home/ubuntu/open-01/robot_ros2/ros2_ws/install/open01_bringup/share/open01_bringup
+creating /home/ubuntu/open-01/robot_ros2/ros2_ws/install/open01_bringup/share/open01_bringup/launch
+symbolically linking /home/ubuntu/open-01/robot_ros2/ros2_ws/build/open01_bringup/launch/bringup.launch.py -> /home/ubuntu/open-01/robot_ros2/ros2_ws/install/open01_bringup/share/open01_bringup/launch

@@ -1,0 +1,22 @@
+running develop
+running egg_info
+creating open01_serial_bridge.egg-info
+writing open01_serial_bridge.egg-info/PKG-INFO
+writing dependency_links to open01_serial_bridge.egg-info/dependency_links.txt
+writing entry points to open01_serial_bridge.egg-info/entry_points.txt
+writing requirements to open01_serial_bridge.egg-info/requires.txt
+writing top-level names to open01_serial_bridge.egg-info/top_level.txt
+writing manifest file 'open01_serial_bridge.egg-info/SOURCES.txt'
+reading manifest file 'open01_serial_bridge.egg-info/SOURCES.txt'
+writing manifest file 'open01_serial_bridge.egg-info/SOURCES.txt'
+running build_ext
+Creating /home/ubuntu/open-01/robot_ros2/ros2_ws/install/open01_serial_bridge/lib/python3.12/site-packages/open01-serial-bridge.egg-link (link to .)
+Installing serial_bridge script to /home/ubuntu/open-01/robot_ros2/ros2_ws/install/open01_serial_bridge/lib/open01_serial_bridge
+
+Installed /home/ubuntu/open-01/robot_ros2/ros2_ws/build/open01_serial_bridge
+running symlink_data
+creating /home/ubuntu/open-01/robot_ros2/ros2_ws/install/open01_serial_bridge/share/ament_index
+creating /home/ubuntu/open-01/robot_ros2/ros2_ws/install/open01_serial_bridge/share/ament_index/resource_index
+creating /home/ubuntu/open-01/robot_ros2/ros2_ws/install/open01_serial_bridge/share/ament_index/resource_index/packages
+symbolically linking /home/ubuntu/open-01/robot_ros2/ros2_ws/build/open01_serial_bridge/resource/open01_serial_bridge -> /home/ubuntu/open-01/robot_ros2/ros2_ws/install/open01_serial_bridge/share/ament_index/resource_index/packages
+symbolically linking /home/ubuntu/open-01/robot_ros2/ros2_ws/build/open01_serial_bridge/package.xml -> /home/ubuntu/open-01/robot_ros2/ros2_ws/install/open01_serial_bridge/share/open01_serial_bridge

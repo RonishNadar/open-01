@@ -1,0 +1,24 @@
+[7.607s] Invoking command in '/home/ubuntu/open-01/robot_ros2/ros2_ws/build/open01_bringup': AMENT_PREFIX_PATH=/home/ubuntu/open-01/robot_ros2/ros2_ws/install/open01_serial_bridge:${AMENT_PREFIX_PATH} PS1=(.venv) \[\e]0;\u@\h: \w\a\]${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ PYTHONPATH=/home/ubuntu/open-01/robot_ros2/ros2_ws/build/open01_bringup/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/ubuntu/open-01/robot_ros2/ros2_ws/install/open01_bringup/lib/python3.12/site-packages:/home/ubuntu/open-01/robot_ros2/ros2_ws/build/open01_serial_bridge:/home/ubuntu/open-01/robot_ros2/ros2_ws/install/open01_serial_bridge/lib/python3.12/site-packages:${PYTHONPATH} VIRTUAL_ENV_PROMPT=(.venv) /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/ubuntu/open-01/robot_ros2/ros2_ws/build/open01_bringup/build --no-deps symlink_data
+[10.663s] running develop
+[12.590s] running egg_info
+[12.591s] creating open01_bringup.egg-info
+[12.762s] writing open01_bringup.egg-info/PKG-INFO
+[12.764s] writing dependency_links to open01_bringup.egg-info/dependency_links.txt
+[12.766s] writing requirements to open01_bringup.egg-info/requires.txt
+[12.768s] writing top-level names to open01_bringup.egg-info/top_level.txt
+[12.769s] writing manifest file 'open01_bringup.egg-info/SOURCES.txt'
+[13.128s] reading manifest file 'open01_bringup.egg-info/SOURCES.txt'
+[13.133s] writing manifest file 'open01_bringup.egg-info/SOURCES.txt'
+[13.319s] running build_ext
+[13.320s] Creating /home/ubuntu/open-01/robot_ros2/ros2_ws/install/open01_bringup/lib/python3.12/site-packages/open01-bringup.egg-link (link to .)
+[13.325s] 
+[13.326s] Installed /home/ubuntu/open-01/robot_ros2/ros2_ws/build/open01_bringup
+[13.328s] running symlink_data
+[13.330s] creating /home/ubuntu/open-01/robot_ros2/ros2_ws/install/open01_bringup/share/ament_index
+[13.331s] creating /home/ubuntu/open-01/robot_ros2/ros2_ws/install/open01_bringup/share/ament_index/resource_index
+[13.332s] creating /home/ubuntu/open-01/robot_ros2/ros2_ws/install/open01_bringup/share/ament_index/resource_index/packages
+[13.334s] symbolically linking /home/ubuntu/open-01/robot_ros2/ros2_ws/build/open01_bringup/resource/open01_bringup -> /home/ubuntu/open-01/robot_ros2/ros2_ws/install/open01_bringup/share/ament_index/resource_index/packages
+[13.335s] symbolically linking /home/ubuntu/open-01/robot_ros2/ros2_ws/build/open01_bringup/package.xml -> /home/ubuntu/open-01/robot_ros2/ros2_ws/install/open01_bringup/share/open01_bringup
+[13.336s] creating /home/ubuntu/open-01/robot_ros2/ros2_ws/install/open01_bringup/share/open01_bringup/launch
+[13.338s] symbolically linking /home/ubuntu/open-01/robot_ros2/ros2_ws/build/open01_bringup/launch/bringup.launch.py -> /home/ubuntu/open-01/robot_ros2/ros2_ws/install/open01_bringup/share/open01_bringup/launch
+[13.668s] Invoked command in '/home/ubuntu/open-01/robot_ros2/ros2_ws/build/open01_bringup' returned '0': AMENT_PREFIX_PATH=/home/ubuntu/open-01/robot_ros2/ros2_ws/install/open01_serial_bridge:${AMENT_PREFIX_PATH} PS1=(.venv) \[\e]0;\u@\h: \w\a\]${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ PYTHONPATH=/home/ubuntu/open-01/robot_ros2/ros2_ws/build/open01_bringup/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/ubuntu/open-01/robot_ros2/ros2_ws/install/open01_bringup/lib/python3.12/site-packages:/home/ubuntu/open-01/robot_ros2/ros2_ws/build/open01_serial_bridge:/home/ubuntu/open-01/robot_ros2/ros2_ws/install/open01_serial_bridge/lib/python3.12/site-packages:${PYTHONPATH} VIRTUAL_ENV_PROMPT=(.venv) /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/ubuntu/open-01/robot_ros2/ros2_ws/build/open01_bringup/build --no-deps symlink_data
