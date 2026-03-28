@@ -4,6 +4,7 @@
 #include "esp_log.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
+#include "driver/gpio.h"
 
 static const char* TAG = "DRV_MPU6500";
 
@@ -30,9 +31,33 @@ static esp_err_t read_regs(uint8_t reg, uint8_t* data, size_t len) {
         I2C_TIMEOUT_TICKS);
 }
 
+static void i2c_bus_recover(void) {
+    // Manually clock SCL 9 times to release any stuck slave
+    gpio_set_direction((gpio_num_t)MPU_SDA, GPIO_MODE_INPUT_OUTPUT_OD);
+    gpio_set_direction((gpio_num_t)MPU_SCL, GPIO_MODE_OUTPUT_OD);
+    gpio_set_level((gpio_num_t)MPU_SDA, 1);
+
+    for (int i = 0; i < 9; i++) {
+        gpio_set_level((gpio_num_t)MPU_SCL, 0);
+        esp_rom_delay_us(5);
+        gpio_set_level((gpio_num_t)MPU_SCL, 1);
+        esp_rom_delay_us(5);
+    }
+    // Send STOP condition
+    gpio_set_level((gpio_num_t)MPU_SDA, 0);
+    esp_rom_delay_us(5);
+    gpio_set_level((gpio_num_t)MPU_SCL, 1);
+    esp_rom_delay_us(5);
+    gpio_set_level((gpio_num_t)MPU_SDA, 1);
+    esp_rom_delay_us(5);
+
+    vTaskDelay(pdMS_TO_TICKS(10));
+}
+
 // ── Init ─────────────────────────────────────────────────────
 esp_err_t drv_mpu6500_init(mpu6500_accel_fs_t accel_fs,
                             mpu6500_gyro_fs_t  gyro_fs) {
+    i2c_bus_recover();
     esp_err_t ret;
 
     i2c_config_t cfg = {};

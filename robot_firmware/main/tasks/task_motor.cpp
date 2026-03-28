@@ -32,12 +32,16 @@ void task_motor(void* arg) {
         } else {
             float vx, vy, vw;
             robot_state_get_cmd_vel(&vx, &vy, &vw);
-            // Convert twist to left/right wheel velocities
             float left_ms  = vx - (vw * WHEEL_SEPARATION_M / 2.0f);
             float right_ms = vx + (vw * WHEEL_SEPARATION_M / 2.0f);
+            ESP_LOGI(TAG, "cmd: vx=%.3f vw=%.3f → L=%.3f R=%.3f dt=%.4f",
+                    vx, vw, left_ms, right_ms, dt);   // ← replace previous log with this
             motor_controller_set_target(&mc, left_ms, right_ms);
         }
-
+        
+        int32_t ld, rd;
+        hal_motor_debug_delta(&ld, &rd);
+        ESP_LOGI(TAG, "L_delta=%ld R_delta=%ld", (long)ld, (long)rd);
         motor_controller_update(&mc, dt);
 
         ESP_LOGI(TAG,

@@ -74,6 +74,8 @@ void comm_handler_process(const CommPacket* pkt) {
             }
             PayloadCmdVelocity cmd;
             memcpy(&cmd, pkt->payload, sizeof(cmd));
+            ESP_LOGI("COMM", "CMD_VELOCITY received: vx=%.3f m/s, vy=%.3f m/s, vw=%.2f rad/s",
+                     cmd.linear_x, cmd.linear_y, cmd.angular_z);
             robot_state_set_cmd_vel(cmd.linear_x, cmd.linear_y, cmd.angular_z);
             break;
         }

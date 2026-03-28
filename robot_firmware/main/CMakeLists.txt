@@ -29,4 +29,10 @@ idf_component_register(
         "services"
         "comms"
         "tasks"
+
+    REQUIRES
+        driver
+        esp_hw_support
+        esp_adc
+        esp_timer
 )

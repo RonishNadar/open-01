@@ -91,8 +91,36 @@ esp_err_t hal_motor_init(void) {
     gpio_isr_handler_add((gpio_num_t)s_motors[MOTOR_RIGHT].fg_pin,
                           fg_isr_handler, &s_motors[MOTOR_RIGHT]);
 
+    gpio_install_isr_service(0);
+    gpio_isr_handler_add((gpio_num_t)s_motors[MOTOR_LEFT].fg_pin,
+                            fg_isr_handler, &s_motors[MOTOR_LEFT]);
+    gpio_isr_handler_add((gpio_num_t)s_motors[MOTOR_RIGHT].fg_pin,
+                            fg_isr_handler, &s_motors[MOTOR_RIGHT]);
+
+    // Startup kick — prime both motor drivers in forward direction
+    vTaskDelay(pdMS_TO_TICKS(100));
+
+    static const uint8_t invert[MOTOR_COUNT] = { MOTOR_LEFT_INVERT, MOTOR_RIGHT_INVERT };
+    for (int i = 0; i < MOTOR_COUNT; i++) {
+        uint8_t dir_level = invert[i] ? 0 : 1;   // forward direction per motor
+        gpio_set_level((gpio_num_t)s_motors[i].dir_pin, dir_level);
+        ledc_set_duty(LEDC_LOW_SPEED_MODE, s_motors[i].ledc_ch, MOTOR_PWM_STOP - 15);
+        ledc_update_duty(LEDC_LOW_SPEED_MODE, s_motors[i].ledc_ch);
+    }
+    vTaskDelay(pdMS_TO_TICKS(100));
+    for (int i = 0; i < MOTOR_COUNT; i++) {
+        ledc_set_duty(LEDC_LOW_SPEED_MODE, s_motors[i].ledc_ch, MOTOR_PWM_STOP);
+        ledc_update_duty(LEDC_LOW_SPEED_MODE, s_motors[i].ledc_ch);
+        gpio_set_level((gpio_num_t)s_motors[i].dir_pin, 1);   // reset to default
+    }
+
     ESP_LOGI(TAG, "Motor HAL initialized");
     return ESP_OK;
+}
+
+void hal_motor_debug_delta(int32_t* left, int32_t* right) {
+    *left  = s_motors[MOTOR_LEFT].delta;
+    *right = s_motors[MOTOR_RIGHT].delta;
 }
 
 void hal_motor_set(motor_id_t motor, float output) {

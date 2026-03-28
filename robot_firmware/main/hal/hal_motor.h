@@ -29,6 +29,7 @@ typedef enum {
 // ── Init ─────────────────────────────────────────────────────
 esp_err_t hal_motor_init(void);
 
+void hal_motor_debug_delta(int32_t* left, int32_t* right);
 // ── Control ──────────────────────────────────────────────────
 
 // Set motor output — normalized -1.0 (full reverse) to +1.0 (full forward)

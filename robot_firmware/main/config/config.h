@@ -41,14 +41,13 @@
 #define BATTERY_SAMPLES   16           // Averaging samples
 
 // ── Motors ────────────────────────────────────────────────────
-#define LEFT_PWM_PIN      15
-#define LEFT_DIR_PIN      16
-#define LEFT_FG_PIN       17
-
 #define RIGHT_PWM_PIN     21
 #define RIGHT_DIR_PIN     33
 #define RIGHT_FG_PIN      34
 
+#define LEFT_PWM_PIN      15
+#define LEFT_DIR_PIN      16
+#define LEFT_FG_PIN       17
 
 #define MOTOR_PWM_FREQ    25000        // 25kHz (above audible range)
 #define MOTOR_PWM_RES     8            // 8-bit resolution (0-255)
@@ -57,8 +56,8 @@
 
 // ── UART to Raspberry Pi ──────────────────────────────────────
 #define COMM_UART_PORT            UART_NUM_1
-#define COMM_UART_TX_PIN          19
-#define COMM_UART_RX_PIN          20
+#define COMM_UART_RX_PIN          19
+#define COMM_UART_TX_PIN          20
 #define COMM_UART_BAUD            460800       // match RPi side
 #define COMM_UART_BUF_SIZE        1024
 #define COMM_TELEMETRY_PERIOD_MS  20           // 50 Hz
@@ -71,17 +70,16 @@
 // ── FIT0441 Encoder ───────────────────────────────────────────
 // Brushless motor, FG pin = frequency feedback
 // 6 pulses per motor electrical cycle × 45:1 gearbox = 270 pulses/rev
-#define MOTOR_GEAR_RATIO      45
-#define MOTOR_FG_PPR          6                // Pulses per motor rev
-#define COUNTS_PER_REV        270              // FG pulses per wheel rev
-                                               // = MOTOR_FG_PPR × MOTOR_GEAR_RATIO
+#define MOTOR_GEAR_RATIO      45               // Pulses per motor rev
+#define MOTOR_FG_PPR          6                // FG pulses per wheel rev
+#define COUNTS_PER_REV        270              // = MOTOR_FG_PPR × MOTOR_GEAR_RATIO
 
 // ── Motor direction inversion ─────────────────────────────────
 // One motor is mounted mirrored — invert its direction here
 // Set to 1 to invert, 0 for normal
 // Test: if robot spins instead of going forward, flip one of these
-#define MOTOR_LEFT_INVERT     0
-#define MOTOR_RIGHT_INVERT    1
+#define MOTOR_LEFT_INVERT     1
+#define MOTOR_RIGHT_INVERT    0
 #define MAX_RPM               159.0f
 #define MAX_VEL_MS            0.566f           // m/s at max RPM
 #define MIN_VEL_MS            0.01f            // below this = treat as stop
