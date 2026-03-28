@@ -20,6 +20,7 @@ setup(
     entry_points={
         'console_scripts': [
             'serial_bridge = open01_serial_bridge.serial_bridge_node:main',
+	    'lidar = open01_serial_bridge.lidar_node:main',
         ],
     },
 )

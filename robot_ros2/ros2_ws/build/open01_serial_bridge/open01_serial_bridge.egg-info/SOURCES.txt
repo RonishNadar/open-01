@@ -2,6 +2,7 @@ package.xml
 setup.cfg
 setup.py
 open01_serial_bridge/__init__.py
+open01_serial_bridge/lidar_node.py
 open01_serial_bridge/serial_bridge_node.py
 open01_serial_bridge.egg-info/PKG-INFO
 open01_serial_bridge.egg-info/SOURCES.txt
