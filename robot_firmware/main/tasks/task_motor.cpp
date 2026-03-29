@@ -7,6 +7,7 @@
 #include "esp_timer.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
+#include "math.h"
 
 static const char* TAG = "TASK_MOTOR";
 
@@ -26,7 +27,7 @@ void task_motor(void* arg) {
         float dt    = (float)(now - last_time) / 1e6f;
         last_time   = now;
 
-        // E-stop check
+        // ── Resolve target velocities ────────────────────────
         if (robot_state_get_estop()) {
             motor_controller_set_target(&mc, 0.0f, 0.0f);
         } else {
@@ -35,13 +36,30 @@ void task_motor(void* arg) {
             float left_ms  = vx - (vw * WHEEL_SEPARATION_M / 2.0f);
             float right_ms = vx + (vw * WHEEL_SEPARATION_M / 2.0f);
             ESP_LOGI(TAG, "cmd: vx=%.3f vw=%.3f → L=%.3f R=%.3f dt=%.4f",
-                    vx, vw, left_ms, right_ms, dt);   // ← replace previous log with this
+                     vx, vw, left_ms, right_ms, dt);
             motor_controller_set_target(&mc, left_ms, right_ms);
         }
-        
+
+        // ── Read encoder deltas for cold-start detection ─────
         int32_t ld, rd;
         hal_motor_debug_delta(&ld, &rd);
         ESP_LOGI(TAG, "L_delta=%ld R_delta=%ld", (long)ld, (long)rd);
+
+        // ── Cold-start inline prime ──────────────────────────
+        if (fabsf(mc.target_left_ms) > MIN_VEL_MS && ld == 0) {
+            float rev = (mc.target_left_ms >= 0.0f) ? -PRIME_REVERSE_OUTPUT : PRIME_REVERSE_OUTPUT;
+            hal_motor_set(MOTOR_LEFT, rev);
+            vTaskDelay(pdMS_TO_TICKS(PRIME_PULSE_MS));
+            ESP_LOGW(TAG, "M0: inline prime");
+        }
+        if (fabsf(mc.target_right_ms) > MIN_VEL_MS && rd == 0) {
+            float rev = (mc.target_right_ms >= 0.0f) ? -PRIME_REVERSE_OUTPUT : PRIME_REVERSE_OUTPUT;
+            hal_motor_set(MOTOR_RIGHT, rev);
+            vTaskDelay(pdMS_TO_TICKS(PRIME_PULSE_MS));
+            ESP_LOGW(TAG, "M1: inline prime");
+        }
+
+        // ── Normal PID + odometry update ─────────────────────
         motor_controller_update(&mc, dt);
 
         ESP_LOGI(TAG,

@@ -84,6 +84,18 @@
 #define MAX_VEL_MS            0.566f           // m/s at max RPM
 #define MIN_VEL_MS            0.01f            // below this = treat as stop
 
+// ── Cold-Start Recovery (feedback-driven) ───────────────────────
+// FIT0441 ESC loses sync after idle. Detect via encoder feedback:
+// if commanded but zero encoder delta for STALL_TICKS, reverse-prime.
+// #define PRIME_STALL_TICKS     3               // consecutive zero-delta ticks before prime
+// #define PRIME_REVERSE_OUTPUT  0.15f           // reverse prime intensity (0-1 normalized)
+// #define PRIME_REVERSE_MS      10             // reverse prime duration (ms)
+// #define PRIME_COOLDOWN_TICKS  2               // ticks to wait after prime before monitoring
+// #define PRIME_MAX_RETRIES     2               // max consecutive primes per wake event
+
+#define PRIME_REVERSE_OUTPUT  0.15f
+#define PRIME_PULSE_MS        10
+
 // ── PID Defaults (tune these) ─────────────────────────────────
 #define PID_KP                0.3f
 #define PID_KI                0.2f
