@@ -1,0 +1,266 @@
+[0.000000] (-) TimerEvent: {}
+[0.002830] (open01_serial_bridge) JobQueued: {'identifier': 'open01_serial_bridge', 'dependencies': OrderedDict()}
+[0.003351] (open01_bringup) JobQueued: {'identifier': 'open01_bringup', 'dependencies': OrderedDict([('open01_serial_bridge', '/home/open01/open-01/robot_ros2/ros2_ws/install/open01_serial_bridge')])}
+[0.004102] (open01_serial_bridge) JobStarted: {'identifier': 'open01_serial_bridge'}
+[0.097951] (-) TimerEvent: {}
+[0.199249] (-) TimerEvent: {}
+[0.300556] (-) TimerEvent: {}
+[0.401793] (-) TimerEvent: {}
+[0.502981] (-) TimerEvent: {}
+[0.604120] (-) TimerEvent: {}
+[0.705354] (-) TimerEvent: {}
+[0.806479] (-) TimerEvent: {}
+[0.907630] (-) TimerEvent: {}
+[1.008865] (-) TimerEvent: {}
+[1.110012] (-) TimerEvent: {}
+[1.211324] (-) TimerEvent: {}
+[1.312508] (-) TimerEvent: {}
+[1.413745] (-) TimerEvent: {}
+[1.514966] (-) TimerEvent: {}
+[1.616124] (-) TimerEvent: {}
+[1.717374] (-) TimerEvent: {}
+[1.818512] (-) TimerEvent: {}
+[1.919672] (-) TimerEvent: {}
+[2.020862] (-) TimerEvent: {}
+[2.122016] (-) TimerEvent: {}
+[2.223146] (-) TimerEvent: {}
+[2.324464] (-) TimerEvent: {}
+[2.425804] (-) TimerEvent: {}
+[2.527007] (-) TimerEvent: {}
+[2.628235] (-) TimerEvent: {}
+[2.729494] (-) TimerEvent: {}
+[2.830643] (-) TimerEvent: {}
+[2.931931] (-) TimerEvent: {}
+[3.033411] (-) TimerEvent: {}
+[3.134811] (-) TimerEvent: {}
+[3.236267] (-) TimerEvent: {}
+[3.337609] (-) TimerEvent: {}
+[3.439035] (-) TimerEvent: {}
+[3.540186] (-) TimerEvent: {}
+[3.641346] (-) TimerEvent: {}
+[3.742492] (-) TimerEvent: {}
+[3.843626] (-) TimerEvent: {}
+[3.944966] (-) TimerEvent: {}
+[4.046207] (-) TimerEvent: {}
+[4.147370] (-) TimerEvent: {}
+[4.248502] (-) TimerEvent: {}
+[4.349683] (-) TimerEvent: {}
+[4.450839] (-) TimerEvent: {}
+[4.552012] (-) TimerEvent: {}
+[4.653220] (-) TimerEvent: {}
+[4.754375] (-) TimerEvent: {}
+[4.855462] (-) TimerEvent: {}
+[4.956587] (-) TimerEvent: {}
+[5.057828] (-) TimerEvent: {}
+[5.158944] (-) TimerEvent: {}
+[5.260109] (-) TimerEvent: {}
+[5.361348] (-) TimerEvent: {}
+[5.462495] (-) TimerEvent: {}
+[5.563635] (-) TimerEvent: {}
+[5.664864] (-) TimerEvent: {}
+[5.766009] (-) TimerEvent: {}
+[5.867270] (-) TimerEvent: {}
+[5.968526] (-) TimerEvent: {}
+[6.069864] (-) TimerEvent: {}
+[6.171231] (-) TimerEvent: {}
+[6.272591] (-) TimerEvent: {}
+[6.374366] (-) TimerEvent: {}
+[6.475885] (-) TimerEvent: {}
+[6.577338] (-) TimerEvent: {}
+[6.678617] (-) TimerEvent: {}
+[6.779943] (-) TimerEvent: {}
+[6.881451] (-) TimerEvent: {}
+[6.982717] (-) TimerEvent: {}
+[7.084083] (-) TimerEvent: {}
+[7.185812] (-) TimerEvent: {}
+[7.287137] (-) TimerEvent: {}
+[7.388466] (-) TimerEvent: {}
+[7.489799] (-) TimerEvent: {}
+[7.591231] (-) TimerEvent: {}
+[7.692521] (-) TimerEvent: {}
+[7.793810] (-) TimerEvent: {}
+[7.895143] (-) TimerEvent: {}
+[7.996587] (-) TimerEvent: {}
+[8.046187] (open01_serial_bridge) Command: {'cmd': ['/usr/bin/python3', '-W', 'ignore:setup.py install is deprecated', '-W', 'ignore:easy_install command is deprecated', 'setup.py', 'egg_info', '--egg-base', '../../build/open01_serial_bridge', 'build', '--build-base', '/home/open01/open-01/robot_ros2/ros2_ws/build/open01_serial_bridge/build', 'install', '--record', '/home/open01/open-01/robot_ros2/ros2_ws/build/open01_serial_bridge/install.log', '--single-version-externally-managed', 'install_data'], 'cwd': '/home/open01/open-01/robot_ros2/ros2_ws/src/open01_serial_bridge', 'env': {'LESSOPEN': '| /usr/bin/lesspipe %s', 'USER': 'open01', 'SSH_CLIENT': '192.168.1.165 49250 22', 'XDG_SESSION_TYPE': 'tty', 'SHLVL': '1', 'LD_LIBRARY_PATH': '/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/aarch64-linux-gnu:/opt/ros/humble/lib', 'MOTD_SHOWN': 'pam', 'HOME': '/home/open01', 'OLDPWD': '/home/open01', 'SSH_TTY': '/dev/pts/0', 'ROS_PYTHON_VERSION': '3', 'PS1': '(.venv) \\[\\e]0;\\u@\\h: \\w\\a\\]${debian_chroot:+($debian_chroot)}\\[\\033[01;32m\\]\\u@\\h\\[\\033[00m\\]:\\[\\033[01;34m\\]\\w\\[\\033[00m\\]\\$', 'DBUS_SESSION_BUS_ADDRESS': 'unix:path=/run/user/1000/bus', 'COLCON_PREFIX_PATH': '/home/open01/open-01/robot_ros2/ros2_ws/install', 'ROS_DISTRO': 'humble', 'LOGNAME': 'open01', '_': '/usr/bin/colcon', 'ROS_VERSION': '2', 'XDG_SESSION_CLASS': 'user', 'TERM': 'xterm-256color', 'XDG_SESSION_ID': '1', 'ROS_LOCALHOST_ONLY': '0', 'PATH': '/home/open01/.venv/bin:/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin', 'XDG_RUNTIME_DIR': '/run/user/1000', 'LANG': 'en_US.UTF-8', 'VIRTUAL_ENV_PROMPT': '(.venv)', 'LS_COLORS': 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:', 'AMENT_PREFIX_PATH': '/home/open01/open-01/robot_ros2/ros2_ws/install/open01_bringup:/home/open01/open-01/robot_ros2/ros2_ws/install/open01_serial_bridge:/opt/ros/humble', 'SHELL': '/bin/bash', 'LESSCLOSE': '/usr/bin/lesspipe %s %s', 'VIRTUAL_ENV': '/home/open01/.venv', 'PWD': '/home/open01/open-01/robot_ros2/ros2_ws/build/open01_serial_bridge', 'LC_ALL': 'en_US.UTF-8', 'SSH_CONNECTION': '192.168.1.165 49250 192.168.1.102 22', 'XDG_DATA_DIRS': '/usr/local/share:/usr/share:/var/lib/snapd/desktop', 'PYTHONPATH': '/home/open01/open-01/robot_ros2/ros2_ws/build/open01_serial_bridge/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/open01/open-01/robot_ros2/ros2_ws/install/open01_serial_bridge/lib/python3.10/site-packages:/home/open01/open-01/robot_ros2/ros2_ws/install/open01_bringup/lib/python3.10/site-packages:/home/open01/open-01/robot_ros2/ros2_ws/install/open01_serial_bridge/lib/python3.10/site-packages:/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages', 'COLCON': '1'}, 'shell': False}
+[8.096882] (-) TimerEvent: {}
+[8.198091] (-) TimerEvent: {}
+[8.299258] (-) TimerEvent: {}
+[8.400434] (-) TimerEvent: {}
+[8.501724] (-) TimerEvent: {}
+[8.602962] (-) TimerEvent: {}
+[8.704120] (-) TimerEvent: {}
+[8.805375] (-) TimerEvent: {}
+[8.906501] (-) TimerEvent: {}
+[9.007670] (-) TimerEvent: {}
+[9.108893] (-) TimerEvent: {}
+[9.210063] (-) TimerEvent: {}
+[9.311222] (-) TimerEvent: {}
+[9.412329] (-) TimerEvent: {}
+[9.513549] (-) TimerEvent: {}
+[9.614707] (-) TimerEvent: {}
+[9.715827] (-) TimerEvent: {}
+[9.817006] (-) TimerEvent: {}
+[9.918158] (-) TimerEvent: {}
+[10.019308] (-) TimerEvent: {}
+[10.120491] (-) TimerEvent: {}
+[10.221788] (-) TimerEvent: {}
+[10.322985] (-) TimerEvent: {}
+[10.424249] (-) TimerEvent: {}
+[10.525652] (-) TimerEvent: {}
+[10.626806] (-) TimerEvent: {}
+[10.728016] (-) TimerEvent: {}
+[10.757085] (open01_serial_bridge) StdoutLine: {'line': b'running egg_info\n'}
+[10.763420] (open01_serial_bridge) StdoutLine: {'line': b'writing ../../build/open01_serial_bridge/open01_serial_bridge.egg-info/PKG-INFO\n'}
+[10.766790] (open01_serial_bridge) StdoutLine: {'line': b'writing dependency_links to ../../build/open01_serial_bridge/open01_serial_bridge.egg-info/dependency_links.txt\n'}
+[10.768923] (open01_serial_bridge) StdoutLine: {'line': b'writing entry points to ../../build/open01_serial_bridge/open01_serial_bridge.egg-info/entry_points.txt\n'}
+[10.770761] (open01_serial_bridge) StdoutLine: {'line': b'writing requirements to ../../build/open01_serial_bridge/open01_serial_bridge.egg-info/requires.txt\n'}
+[10.772106] (open01_serial_bridge) StdoutLine: {'line': b'writing top-level names to ../../build/open01_serial_bridge/open01_serial_bridge.egg-info/top_level.txt\n'}
+[10.791020] (open01_serial_bridge) StdoutLine: {'line': b"reading manifest file '../../build/open01_serial_bridge/open01_serial_bridge.egg-info/SOURCES.txt'\n"}
+[10.804703] (open01_serial_bridge) StdoutLine: {'line': b"writing manifest file '../../build/open01_serial_bridge/open01_serial_bridge.egg-info/SOURCES.txt'\n"}
+[10.806099] (open01_serial_bridge) StdoutLine: {'line': b'running build\n'}
+[10.807065] (open01_serial_bridge) StdoutLine: {'line': b'running build_py\n'}
+[10.814172] (open01_serial_bridge) StdoutLine: {'line': b'running install\n'}
+[10.817226] (open01_serial_bridge) StdoutLine: {'line': b'running install_lib\n'}
+[10.828282] (-) TimerEvent: {}
+[10.831411] (open01_serial_bridge) StdoutLine: {'line': b'running install_data\n'}
+[10.833210] (open01_serial_bridge) StdoutLine: {'line': b'running install_egg_info\n'}
+[10.849809] (open01_serial_bridge) StdoutLine: {'line': b"removing '/home/open01/open-01/robot_ros2/ros2_ws/install/open01_serial_bridge/lib/python3.10/site-packages/open01_serial_bridge-0.1.0-py3.10.egg-info' (and everything under it)\n"}
+[10.853849] (open01_serial_bridge) StdoutLine: {'line': b'Copying ../../build/open01_serial_bridge/open01_serial_bridge.egg-info to /home/open01/open-01/robot_ros2/ros2_ws/install/open01_serial_bridge/lib/python3.10/site-packages/open01_serial_bridge-0.1.0-py3.10.egg-info\n'}
+[10.868416] (open01_serial_bridge) StdoutLine: {'line': b'running install_scripts\n'}
+[10.928560] (-) TimerEvent: {}
+[11.029823] (-) TimerEvent: {}
+[11.055677] (open01_serial_bridge) StdoutLine: {'line': b'Installing lidar script to /home/open01/open-01/robot_ros2/ros2_ws/install/open01_serial_bridge/lib/open01_serial_bridge\n'}
+[11.057578] (open01_serial_bridge) StdoutLine: {'line': b'Installing serial_bridge script to /home/open01/open-01/robot_ros2/ros2_ws/install/open01_serial_bridge/lib/open01_serial_bridge\n'}
+[11.061353] (open01_serial_bridge) StdoutLine: {'line': b"writing list of installed files to '/home/open01/open-01/robot_ros2/ros2_ws/build/open01_serial_bridge/install.log'\n"}
+[11.130168] (-) TimerEvent: {}
+[11.231596] (-) TimerEvent: {}
+[11.315012] (open01_serial_bridge) CommandEnded: {'returncode': 0}
+[11.331807] (-) TimerEvent: {}
+[11.433467] (-) TimerEvent: {}
+[11.535407] (-) TimerEvent: {}
+[11.567530] (open01_serial_bridge) JobEnded: {'identifier': 'open01_serial_bridge', 'rc': 0}
+[11.577129] (open01_bringup) JobStarted: {'identifier': 'open01_bringup'}
+[11.635762] (-) TimerEvent: {}
+[11.737108] (-) TimerEvent: {}
+[11.838379] (-) TimerEvent: {}
+[11.939565] (-) TimerEvent: {}
+[12.040924] (-) TimerEvent: {}
+[12.142112] (-) TimerEvent: {}
+[12.243295] (-) TimerEvent: {}
+[12.344507] (-) TimerEvent: {}
+[12.445774] (-) TimerEvent: {}
+[12.546928] (-) TimerEvent: {}
+[12.648092] (-) TimerEvent: {}
+[12.749360] (-) TimerEvent: {}
+[12.850460] (-) TimerEvent: {}
+[12.951654] (-) TimerEvent: {}
+[13.052949] (-) TimerEvent: {}
+[13.154148] (-) TimerEvent: {}
+[13.255316] (-) TimerEvent: {}
+[13.356502] (-) TimerEvent: {}
+[13.457727] (-) TimerEvent: {}
+[13.558947] (-) TimerEvent: {}
+[13.660116] (-) TimerEvent: {}
+[13.761317] (-) TimerEvent: {}
+[13.862495] (-) TimerEvent: {}
+[13.963721] (-) TimerEvent: {}
+[14.065047] (-) TimerEvent: {}
+[14.166233] (-) TimerEvent: {}
+[14.267383] (-) TimerEvent: {}
+[14.368707] (-) TimerEvent: {}
+[14.470073] (-) TimerEvent: {}
+[14.571371] (-) TimerEvent: {}
+[14.672545] (-) TimerEvent: {}
+[14.773902] (-) TimerEvent: {}
+[14.875280] (-) TimerEvent: {}
+[14.976549] (-) TimerEvent: {}
+[15.077791] (-) TimerEvent: {}
+[15.178907] (-) TimerEvent: {}
+[15.280177] (-) TimerEvent: {}
+[15.381485] (-) TimerEvent: {}
+[15.482631] (-) TimerEvent: {}
+[15.583830] (-) TimerEvent: {}
+[15.685250] (-) TimerEvent: {}
+[15.786427] (-) TimerEvent: {}
+[15.887563] (-) TimerEvent: {}
+[15.988734] (-) TimerEvent: {}
+[16.089955] (-) TimerEvent: {}
+[16.191190] (-) TimerEvent: {}
+[16.292337] (-) TimerEvent: {}
+[16.393543] (-) TimerEvent: {}
+[16.495027] (-) TimerEvent: {}
+[16.596219] (-) TimerEvent: {}
+[16.697484] (-) TimerEvent: {}
+[16.798632] (-) TimerEvent: {}
+[16.899859] (-) TimerEvent: {}
+[17.001121] (-) TimerEvent: {}
+[17.102315] (-) TimerEvent: {}
+[17.203528] (-) TimerEvent: {}
+[17.304735] (-) TimerEvent: {}
+[17.406021] (-) TimerEvent: {}
+[17.507328] (-) TimerEvent: {}
+[17.608688] (-) TimerEvent: {}
+[17.709886] (-) TimerEvent: {}
+[17.810986] (-) TimerEvent: {}
+[17.912132] (-) TimerEvent: {}
+[18.013321] (-) TimerEvent: {}
+[18.114480] (-) TimerEvent: {}
+[18.215813] (-) TimerEvent: {}
+[18.317222] (-) TimerEvent: {}
+[18.418653] (-) TimerEvent: {}
+[18.502323] (open01_bringup) Command: {'cmd': ['/usr/bin/python3', '-W', 'ignore:setup.py install is deprecated', '-W', 'ignore:easy_install command is deprecated', 'setup.py', 'egg_info', '--egg-base', '../../build/open01_bringup', 'build', '--build-base', '/home/open01/open-01/robot_ros2/ros2_ws/build/open01_bringup/build', 'install', '--record', '/home/open01/open-01/robot_ros2/ros2_ws/build/open01_bringup/install.log', '--single-version-externally-managed', 'install_data'], 'cwd': '/home/open01/open-01/robot_ros2/ros2_ws/src/open01_bringup', 'env': {'LESSOPEN': '| /usr/bin/lesspipe %s', 'USER': 'open01', 'SSH_CLIENT': '192.168.1.165 49250 22', 'XDG_SESSION_TYPE': 'tty', 'SHLVL': '1', 'LD_LIBRARY_PATH': '/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/aarch64-linux-gnu:/opt/ros/humble/lib', 'MOTD_SHOWN': 'pam', 'HOME': '/home/open01', 'OLDPWD': '/home/open01', 'SSH_TTY': '/dev/pts/0', 'ROS_PYTHON_VERSION': '3', 'PS1': '(.venv) \\[\\e]0;\\u@\\h: \\w\\a\\]${debian_chroot:+($debian_chroot)}\\[\\033[01;32m\\]\\u@\\h\\[\\033[00m\\]:\\[\\033[01;34m\\]\\w\\[\\033[00m\\]\\$', 'DBUS_SESSION_BUS_ADDRESS': 'unix:path=/run/user/1000/bus', 'COLCON_PREFIX_PATH': '/home/open01/open-01/robot_ros2/ros2_ws/install', 'ROS_DISTRO': 'humble', 'LOGNAME': 'open01', '_': '/usr/bin/colcon', 'ROS_VERSION': '2', 'XDG_SESSION_CLASS': 'user', 'TERM': 'xterm-256color', 'XDG_SESSION_ID': '1', 'ROS_LOCALHOST_ONLY': '0', 'PATH': '/home/open01/.venv/bin:/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin', 'XDG_RUNTIME_DIR': '/run/user/1000', 'LANG': 'en_US.UTF-8', 'VIRTUAL_ENV_PROMPT': '(.venv)', 'LS_COLORS': 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:', 'AMENT_PREFIX_PATH': '/home/open01/open-01/robot_ros2/ros2_ws/install/open01_serial_bridge:/home/open01/open-01/robot_ros2/ros2_ws/install/open01_bringup:/opt/ros/humble', 'SHELL': '/bin/bash', 'LESSCLOSE': '/usr/bin/lesspipe %s %s', 'VIRTUAL_ENV': '/home/open01/.venv', 'PWD': '/home/open01/open-01/robot_ros2/ros2_ws/build/open01_bringup', 'LC_ALL': 'en_US.UTF-8', 'SSH_CONNECTION': '192.168.1.165 49250 192.168.1.102 22', 'XDG_DATA_DIRS': '/usr/local/share:/usr/share:/var/lib/snapd/desktop', 'PYTHONPATH': '/home/open01/open-01/robot_ros2/ros2_ws/build/open01_bringup/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/open01/open-01/robot_ros2/ros2_ws/install/open01_bringup/lib/python3.10/site-packages:/home/open01/open-01/robot_ros2/ros2_ws/install/open01_serial_bridge/lib/python3.10/site-packages:/home/open01/open-01/robot_ros2/ros2_ws/install/open01_bringup/lib/python3.10/site-packages:/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages', 'COLCON': '1'}, 'shell': False}
+[18.518908] (-) TimerEvent: {}
+[18.620244] (-) TimerEvent: {}
+[18.721543] (-) TimerEvent: {}
+[18.822663] (-) TimerEvent: {}
+[18.923945] (-) TimerEvent: {}
+[19.025399] (-) TimerEvent: {}
+[19.126552] (-) TimerEvent: {}
+[19.227811] (-) TimerEvent: {}
+[19.329030] (-) TimerEvent: {}
+[19.430465] (-) TimerEvent: {}
+[19.531672] (-) TimerEvent: {}
+[19.632828] (-) TimerEvent: {}
+[19.734075] (-) TimerEvent: {}
+[19.835458] (-) TimerEvent: {}
+[19.936684] (-) TimerEvent: {}
+[20.037857] (-) TimerEvent: {}
+[20.138999] (-) TimerEvent: {}
+[20.240203] (-) TimerEvent: {}
+[20.341436] (-) TimerEvent: {}
+[20.442607] (-) TimerEvent: {}
+[20.543799] (-) TimerEvent: {}
+[20.645007] (-) TimerEvent: {}
+[20.746164] (-) TimerEvent: {}
+[20.847332] (-) TimerEvent: {}
+[20.948487] (-) TimerEvent: {}
+[21.049690] (-) TimerEvent: {}
+[21.150894] (-) TimerEvent: {}
+[21.203905] (open01_bringup) StdoutLine: {'line': b'running egg_info\n'}
+[21.209822] (open01_bringup) StdoutLine: {'line': b'writing ../../build/open01_bringup/open01_bringup.egg-info/PKG-INFO\n'}
+[21.213613] (open01_bringup) StdoutLine: {'line': b'writing dependency_links to ../../build/open01_bringup/open01_bringup.egg-info/dependency_links.txt\n'}
+[21.215316] (open01_bringup) StdoutLine: {'line': b'writing entry points to ../../build/open01_bringup/open01_bringup.egg-info/entry_points.txt\n'}
+[21.217581] (open01_bringup) StdoutLine: {'line': b'writing requirements to ../../build/open01_bringup/open01_bringup.egg-info/requires.txt\n'}
+[21.219199] (open01_bringup) StdoutLine: {'line': b'writing top-level names to ../../build/open01_bringup/open01_bringup.egg-info/top_level.txt\n'}
+[21.239045] (open01_bringup) StdoutLine: {'line': b"reading manifest file '../../build/open01_bringup/open01_bringup.egg-info/SOURCES.txt'\n"}
+[21.250760] (open01_bringup) StdoutLine: {'line': b"writing manifest file '../../build/open01_bringup/open01_bringup.egg-info/SOURCES.txt'\n"}
+[21.252172] (-) TimerEvent: {}
+[21.253229] (open01_bringup) StdoutLine: {'line': b'running build\n'}
+[21.254443] (open01_bringup) StdoutLine: {'line': b'running build_py\n'}
+[21.258757] (open01_bringup) StdoutLine: {'line': b'running install\n'}
+[21.261600] (open01_bringup) StdoutLine: {'line': b'running install_lib\n'}
+[21.275348] (open01_bringup) StdoutLine: {'line': b'running install_data\n'}
+[21.277648] (open01_bringup) StdoutLine: {'line': b'copying launch/bringup.launch.py -> /home/open01/open-01/robot_ros2/ros2_ws/install/open01_bringup/share/open01_bringup/launch\n'}
+[21.279237] (open01_bringup) StdoutLine: {'line': b'running install_egg_info\n'}
+[21.298550] (open01_bringup) StdoutLine: {'line': b"removing '/home/open01/open-01/robot_ros2/ros2_ws/install/open01_bringup/lib/python3.10/site-packages/open01_bringup-0.1.0-py3.10.egg-info' (and everything under it)\n"}
+[21.302494] (open01_bringup) StdoutLine: {'line': b'Copying ../../build/open01_bringup/open01_bringup.egg-info to /home/open01/open-01/robot_ros2/ros2_ws/install/open01_bringup/lib/python3.10/site-packages/open01_bringup-0.1.0-py3.10.egg-info\n'}
+[21.316416] (open01_bringup) StdoutLine: {'line': b'running install_scripts\n'}
+[21.352521] (-) TimerEvent: {}
+[21.453925] (-) TimerEvent: {}
+[21.505266] (open01_bringup) StdoutLine: {'line': b"writing list of installed files to '/home/open01/open-01/robot_ros2/ros2_ws/build/open01_bringup/install.log'\n"}
+[21.554264] (-) TimerEvent: {}
+[21.655610] (-) TimerEvent: {}
+[21.758141] (open01_bringup) CommandEnded: {'returncode': 0}
+[21.763160] (-) TimerEvent: {}
+[21.830735] (open01_bringup) JobEnded: {'identifier': 'open01_bringup', 'rc': 0}
+[21.836789] (-) EventReactorShutdown: {}
