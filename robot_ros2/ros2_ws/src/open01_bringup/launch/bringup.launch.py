@@ -6,7 +6,7 @@ from launch.substitutions import LaunchConfiguration
 def generate_launch_description():
 
     port_arg = DeclareLaunchArgument(
-        'port', default_value='/dev/ttyAMA0',
+        'port', default_value='/dev/ttyS0',
         description='Serial port connected to ESP32')
 
     baud_arg = DeclareLaunchArgument(

@@ -1,0 +1,178 @@
+[1.148s] DEBUG:colcon:Command line arguments: ['/usr/bin/colcon', 'build']
+[1.149s] DEBUG:colcon:Parsed command line arguments: Namespace(log_base=None, log_level=None, verb_name='build', build_base='build', install_base='install', merge_install=False, symlink_install=False, test_result_base=None, continue_on_error=False, executor='parallel', parallel_workers=4, event_handlers=None, ignore_user_meta=False, metas=['./colcon.meta'], base_paths=['.'], packages_ignore=None, packages_ignore_regex=None, paths=None, packages_up_to=None, packages_up_to_regex=None, packages_above=None, packages_above_and_dependencies=None, packages_above_depth=None, packages_select_by_dep=None, packages_skip_by_dep=None, packages_skip_up_to=None, packages_select_build_failed=False, packages_skip_build_finished=False, packages_select_test_failures=False, packages_skip_test_passed=False, packages_select=None, packages_skip=None, packages_select_regex=None, packages_skip_regex=None, packages_start=None, packages_end=None, allow_overriding=[], cmake_args=None, cmake_target=None, cmake_target_skip_unavailable=False, cmake_clean_cache=False, cmake_clean_first=False, cmake_force_configure=False, ament_cmake_args=None, catkin_cmake_args=None, catkin_skip_building_tests=False, verb_parser=<colcon_defaults.argument_parser.defaults.DefaultArgumentsDecorator object at 0xffff96803220>, verb_extension=<colcon_core.verb.build.BuildVerb object at 0xffff9692c610>, main=<bound method BuildVerb.main of <colcon_core.verb.build.BuildVerb object at 0xffff9692c610>>)
+[3.227s] Level 1:colcon.colcon_core.package_discovery:discover_packages(colcon_meta) check parameters
+[3.228s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) check parameters
+[3.229s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) check parameters
+[3.229s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) check parameters
+[3.229s] Level 1:colcon.colcon_core.package_discovery:discover_packages(colcon_meta) discover
+[3.230s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) discover
+[3.230s] INFO:colcon.colcon_core.package_discovery:Crawling recursively for packages in '/home/open01/open-01/robot_ros2/ros2_ws'
+[3.231s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['ignore', 'ignore_ament_install']
+[3.232s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ignore'
+[3.233s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ignore_ament_install'
+[3.233s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['colcon_pkg']
+[3.234s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'colcon_pkg'
+[3.234s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['colcon_meta']
+[3.235s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'colcon_meta'
+[3.235s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['ros']
+[3.235s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ros'
+[3.355s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['cmake', 'python']
+[3.356s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'cmake'
+[3.356s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'python'
+[3.357s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['python_setup_py']
+[3.357s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'python_setup_py'
+[3.358s] Level 1:colcon.colcon_core.package_identification:_identify(build) by extensions ['ignore', 'ignore_ament_install']
+[3.359s] Level 1:colcon.colcon_core.package_identification:_identify(build) by extension 'ignore'
+[3.360s] Level 1:colcon.colcon_core.package_identification:_identify(build) ignored
+[3.361s] Level 1:colcon.colcon_core.package_identification:_identify(install) by extensions ['ignore', 'ignore_ament_install']
+[3.362s] Level 1:colcon.colcon_core.package_identification:_identify(install) by extension 'ignore'
+[3.363s] Level 1:colcon.colcon_core.package_identification:_identify(install) ignored
+[3.364s] Level 1:colcon.colcon_core.package_identification:_identify(log) by extensions ['ignore', 'ignore_ament_install']
+[3.365s] Level 1:colcon.colcon_core.package_identification:_identify(log) by extension 'ignore'
+[3.365s] Level 1:colcon.colcon_core.package_identification:_identify(log) ignored
+[3.366s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['ignore', 'ignore_ament_install']
+[3.367s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'ignore'
+[3.368s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'ignore_ament_install'
+[3.368s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['colcon_pkg']
+[3.369s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'colcon_pkg'
+[3.369s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['colcon_meta']
+[3.369s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'colcon_meta'
+[3.370s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['ros']
+[3.370s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'ros'
+[3.371s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['cmake', 'python']
+[3.372s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'cmake'
+[3.372s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'python'
+[3.373s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['python_setup_py']
+[3.373s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'python_setup_py'
+[3.374s] Level 1:colcon.colcon_core.package_identification:_identify(src/open01_bringup) by extensions ['ignore', 'ignore_ament_install']
+[3.375s] Level 1:colcon.colcon_core.package_identification:_identify(src/open01_bringup) by extension 'ignore'
+[3.376s] Level 1:colcon.colcon_core.package_identification:_identify(src/open01_bringup) by extension 'ignore_ament_install'
+[3.376s] Level 1:colcon.colcon_core.package_identification:_identify(src/open01_bringup) by extensions ['colcon_pkg']
+[3.377s] Level 1:colcon.colcon_core.package_identification:_identify(src/open01_bringup) by extension 'colcon_pkg'
+[3.377s] Level 1:colcon.colcon_core.package_identification:_identify(src/open01_bringup) by extensions ['colcon_meta']
+[3.377s] Level 1:colcon.colcon_core.package_identification:_identify(src/open01_bringup) by extension 'colcon_meta'
+[3.378s] Level 1:colcon.colcon_core.package_identification:_identify(src/open01_bringup) by extensions ['ros']
+[3.378s] Level 1:colcon.colcon_core.package_identification:_identify(src/open01_bringup) by extension 'ros'
+[3.398s] DEBUG:colcon.colcon_core.package_identification:Package 'src/open01_bringup' with type 'ros.ament_python' and name 'open01_bringup'
+[3.399s] Level 1:colcon.colcon_core.package_identification:_identify(src/open01_serial_bridge) by extensions ['ignore', 'ignore_ament_install']
+[3.400s] Level 1:colcon.colcon_core.package_identification:_identify(src/open01_serial_bridge) by extension 'ignore'
+[3.401s] Level 1:colcon.colcon_core.package_identification:_identify(src/open01_serial_bridge) by extension 'ignore_ament_install'
+[3.401s] Level 1:colcon.colcon_core.package_identification:_identify(src/open01_serial_bridge) by extensions ['colcon_pkg']
+[3.402s] Level 1:colcon.colcon_core.package_identification:_identify(src/open01_serial_bridge) by extension 'colcon_pkg'
+[3.402s] Level 1:colcon.colcon_core.package_identification:_identify(src/open01_serial_bridge) by extensions ['colcon_meta']
+[3.403s] Level 1:colcon.colcon_core.package_identification:_identify(src/open01_serial_bridge) by extension 'colcon_meta'
+[3.403s] Level 1:colcon.colcon_core.package_identification:_identify(src/open01_serial_bridge) by extensions ['ros']
+[3.404s] Level 1:colcon.colcon_core.package_identification:_identify(src/open01_serial_bridge) by extension 'ros'
+[3.409s] DEBUG:colcon.colcon_core.package_identification:Package 'src/open01_serial_bridge' with type 'ros.ament_python' and name 'open01_serial_bridge'
+[3.409s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) using defaults
+[3.410s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) discover
+[3.410s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) using defaults
+[3.410s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) discover
+[3.411s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) using defaults
+[3.598s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) check parameters
+[3.598s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) discover
+[3.634s] DEBUG:colcon.colcon_installed_package_information.package_discovery:Found 273 installed packages in /opt/ros/humble
+[3.660s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) using defaults
+[4.216s] Level 5:colcon.colcon_core.verb:set package 'open01_serial_bridge' build argument 'cmake_args' from command line to 'None'
+[4.217s] Level 5:colcon.colcon_core.verb:set package 'open01_serial_bridge' build argument 'cmake_target' from command line to 'None'
+[4.217s] Level 5:colcon.colcon_core.verb:set package 'open01_serial_bridge' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[4.217s] Level 5:colcon.colcon_core.verb:set package 'open01_serial_bridge' build argument 'cmake_clean_cache' from command line to 'False'
+[4.217s] Level 5:colcon.colcon_core.verb:set package 'open01_serial_bridge' build argument 'cmake_clean_first' from command line to 'False'
+[4.218s] Level 5:colcon.colcon_core.verb:set package 'open01_serial_bridge' build argument 'cmake_force_configure' from command line to 'False'
+[4.218s] Level 5:colcon.colcon_core.verb:set package 'open01_serial_bridge' build argument 'ament_cmake_args' from command line to 'None'
+[4.218s] Level 5:colcon.colcon_core.verb:set package 'open01_serial_bridge' build argument 'catkin_cmake_args' from command line to 'None'
+[4.218s] Level 5:colcon.colcon_core.verb:set package 'open01_serial_bridge' build argument 'catkin_skip_building_tests' from command line to 'False'
+[4.219s] DEBUG:colcon.colcon_core.verb:Building package 'open01_serial_bridge' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/open01/open-01/robot_ros2/ros2_ws/build/open01_serial_bridge', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/open01/open-01/robot_ros2/ros2_ws/install/open01_serial_bridge', 'merge_install': False, 'path': '/home/open01/open-01/robot_ros2/ros2_ws/src/open01_serial_bridge', 'symlink_install': False, 'test_result_base': None}
+[4.223s] Level 5:colcon.colcon_core.verb:set package 'open01_bringup' build argument 'cmake_args' from command line to 'None'
+[4.223s] Level 5:colcon.colcon_core.verb:set package 'open01_bringup' build argument 'cmake_target' from command line to 'None'
+[4.224s] Level 5:colcon.colcon_core.verb:set package 'open01_bringup' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[4.224s] Level 5:colcon.colcon_core.verb:set package 'open01_bringup' build argument 'cmake_clean_cache' from command line to 'False'
+[4.224s] Level 5:colcon.colcon_core.verb:set package 'open01_bringup' build argument 'cmake_clean_first' from command line to 'False'
+[4.224s] Level 5:colcon.colcon_core.verb:set package 'open01_bringup' build argument 'cmake_force_configure' from command line to 'False'
+[4.225s] Level 5:colcon.colcon_core.verb:set package 'open01_bringup' build argument 'ament_cmake_args' from command line to 'None'
+[4.225s] Level 5:colcon.colcon_core.verb:set package 'open01_bringup' build argument 'catkin_cmake_args' from command line to 'None'
+[4.225s] Level 5:colcon.colcon_core.verb:set package 'open01_bringup' build argument 'catkin_skip_building_tests' from command line to 'False'
+[4.225s] DEBUG:colcon.colcon_core.verb:Building package 'open01_bringup' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/open01/open-01/robot_ros2/ros2_ws/build/open01_bringup', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/open01/open-01/robot_ros2/ros2_ws/install/open01_bringup', 'merge_install': False, 'path': '/home/open01/open-01/robot_ros2/ros2_ws/src/open01_bringup', 'symlink_install': False, 'test_result_base': None}
+[4.227s] INFO:colcon.colcon_core.executor:Executing jobs using 'parallel' executor
+[4.234s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:run_until_complete
+[4.236s] INFO:colcon.colcon_ros.task.ament_python.build:Building ROS package in '/home/open01/open-01/robot_ros2/ros2_ws/src/open01_serial_bridge' with build type 'ament_python'
+[4.238s] Level 1:colcon.colcon_core.shell:create_environment_hook('open01_serial_bridge', 'ament_prefix_path')
+[4.261s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_core.shell.bat': Not used on non-Windows systems
+[4.263s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/open01/open-01/robot_ros2/ros2_ws/install/open01_serial_bridge/share/open01_serial_bridge/hook/ament_prefix_path.ps1'
+[4.270s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/open01/open-01/robot_ros2/ros2_ws/install/open01_serial_bridge/share/open01_serial_bridge/hook/ament_prefix_path.dsv'
+[4.276s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/open01/open-01/robot_ros2/ros2_ws/install/open01_serial_bridge/share/open01_serial_bridge/hook/ament_prefix_path.sh'
+[4.284s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[4.285s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[7.325s] INFO:colcon.colcon_core.task.python.build:Building Python package in '/home/open01/open-01/robot_ros2/ros2_ws/src/open01_serial_bridge'
+[7.328s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[7.328s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[11.512s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/open01/open-01/robot_ros2/ros2_ws/src/open01_serial_bridge': PS1=(.venv) \[\e]0;\u@\h: \w\a\]${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ PYTHONPATH=/home/open01/open-01/robot_ros2/ros2_ws/build/open01_serial_bridge/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/open01/open-01/robot_ros2/ros2_ws/install/open01_serial_bridge/lib/python3.10/site-packages:${PYTHONPATH} VIRTUAL_ENV_PROMPT=(.venv) /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/open01_serial_bridge build --build-base /home/open01/open-01/robot_ros2/ros2_ws/build/open01_serial_bridge/build install --record /home/open01/open-01/robot_ros2/ros2_ws/build/open01_serial_bridge/install.log --single-version-externally-managed install_data
+[15.000s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/open01/open-01/robot_ros2/ros2_ws/src/open01_serial_bridge' returned '0': PS1=(.venv) \[\e]0;\u@\h: \w\a\]${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ PYTHONPATH=/home/open01/open-01/robot_ros2/ros2_ws/build/open01_serial_bridge/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/open01/open-01/robot_ros2/ros2_ws/install/open01_serial_bridge/lib/python3.10/site-packages:${PYTHONPATH} VIRTUAL_ENV_PROMPT=(.venv) /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/open01_serial_bridge build --build-base /home/open01/open-01/robot_ros2/ros2_ws/build/open01_serial_bridge/build install --record /home/open01/open-01/robot_ros2/ros2_ws/build/open01_serial_bridge/install.log --single-version-externally-managed install_data
+[15.026s] Level 1:colcon.colcon_core.environment:checking '/home/open01/open-01/robot_ros2/ros2_ws/install/open01_serial_bridge' for CMake module files
+[15.032s] Level 1:colcon.colcon_core.environment:checking '/home/open01/open-01/robot_ros2/ros2_ws/install/open01_serial_bridge' for CMake config files
+[15.041s] Level 1:colcon.colcon_core.environment:checking '/home/open01/open-01/robot_ros2/ros2_ws/install/open01_serial_bridge/lib'
+[15.043s] Level 1:colcon.colcon_core.environment:checking '/home/open01/open-01/robot_ros2/ros2_ws/install/open01_serial_bridge/bin'
+[15.044s] Level 1:colcon.colcon_core.environment:checking '/home/open01/open-01/robot_ros2/ros2_ws/install/open01_serial_bridge/lib/pkgconfig/open01_serial_bridge.pc'
+[15.047s] Level 1:colcon.colcon_core.environment:checking '/home/open01/open-01/robot_ros2/ros2_ws/install/open01_serial_bridge/lib/python3.10/site-packages'
+[15.047s] Level 1:colcon.colcon_core.shell:create_environment_hook('open01_serial_bridge', 'pythonpath')
+[15.050s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/open01/open-01/robot_ros2/ros2_ws/install/open01_serial_bridge/share/open01_serial_bridge/hook/pythonpath.ps1'
+[15.054s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/open01/open-01/robot_ros2/ros2_ws/install/open01_serial_bridge/share/open01_serial_bridge/hook/pythonpath.dsv'
+[15.059s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/open01/open-01/robot_ros2/ros2_ws/install/open01_serial_bridge/share/open01_serial_bridge/hook/pythonpath.sh'
+[15.067s] Level 1:colcon.colcon_core.environment:checking '/home/open01/open-01/robot_ros2/ros2_ws/install/open01_serial_bridge/bin'
+[15.068s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(open01_serial_bridge)
+[15.072s] INFO:colcon.colcon_core.shell:Creating package script '/home/open01/open-01/robot_ros2/ros2_ws/install/open01_serial_bridge/share/open01_serial_bridge/package.ps1'
+[15.081s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/open01/open-01/robot_ros2/ros2_ws/install/open01_serial_bridge/share/open01_serial_bridge/package.dsv'
+[15.088s] INFO:colcon.colcon_core.shell:Creating package script '/home/open01/open-01/robot_ros2/ros2_ws/install/open01_serial_bridge/share/open01_serial_bridge/package.sh'
+[15.096s] INFO:colcon.colcon_core.shell:Creating package script '/home/open01/open-01/robot_ros2/ros2_ws/install/open01_serial_bridge/share/open01_serial_bridge/package.bash'
+[15.105s] INFO:colcon.colcon_core.shell:Creating package script '/home/open01/open-01/robot_ros2/ros2_ws/install/open01_serial_bridge/share/open01_serial_bridge/package.zsh'
+[15.113s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/open01/open-01/robot_ros2/ros2_ws/install/open01_serial_bridge/share/colcon-core/packages/open01_serial_bridge)
+[15.117s] INFO:colcon.colcon_ros.task.ament_python.build:Building ROS package in '/home/open01/open-01/robot_ros2/ros2_ws/src/open01_bringup' with build type 'ament_python'
+[15.119s] Level 1:colcon.colcon_core.shell:create_environment_hook('open01_bringup', 'ament_prefix_path')
+[15.121s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/open01/open-01/robot_ros2/ros2_ws/install/open01_bringup/share/open01_bringup/hook/ament_prefix_path.ps1'
+[15.129s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/open01/open-01/robot_ros2/ros2_ws/install/open01_bringup/share/open01_bringup/hook/ament_prefix_path.dsv'
+[15.135s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/open01/open-01/robot_ros2/ros2_ws/install/open01_bringup/share/open01_bringup/hook/ament_prefix_path.sh'
+[15.141s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[15.142s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[18.219s] INFO:colcon.colcon_core.task.python.build:Building Python package in '/home/open01/open-01/robot_ros2/ros2_ws/src/open01_bringup'
+[18.221s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[18.222s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[22.446s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/open01/open-01/robot_ros2/ros2_ws/src/open01_bringup': AMENT_PREFIX_PATH=/home/open01/open-01/robot_ros2/ros2_ws/install/open01_serial_bridge:${AMENT_PREFIX_PATH} PS1=(.venv) \[\e]0;\u@\h: \w\a\]${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ PYTHONPATH=/home/open01/open-01/robot_ros2/ros2_ws/build/open01_bringup/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/open01/open-01/robot_ros2/ros2_ws/install/open01_bringup/lib/python3.10/site-packages:/home/open01/open-01/robot_ros2/ros2_ws/install/open01_serial_bridge/lib/python3.10/site-packages:${PYTHONPATH} VIRTUAL_ENV_PROMPT=(.venv) /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/open01_bringup build --build-base /home/open01/open-01/robot_ros2/ros2_ws/build/open01_bringup/build install --record /home/open01/open-01/robot_ros2/ros2_ws/build/open01_bringup/install.log --single-version-externally-managed install_data
+[25.884s] Level 1:colcon.colcon_core.environment:checking '/home/open01/open-01/robot_ros2/ros2_ws/install/open01_bringup' for CMake module files
+[25.888s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/open01/open-01/robot_ros2/ros2_ws/src/open01_bringup' returned '0': AMENT_PREFIX_PATH=/home/open01/open-01/robot_ros2/ros2_ws/install/open01_serial_bridge:${AMENT_PREFIX_PATH} PS1=(.venv) \[\e]0;\u@\h: \w\a\]${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ PYTHONPATH=/home/open01/open-01/robot_ros2/ros2_ws/build/open01_bringup/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/open01/open-01/robot_ros2/ros2_ws/install/open01_bringup/lib/python3.10/site-packages:/home/open01/open-01/robot_ros2/ros2_ws/install/open01_serial_bridge/lib/python3.10/site-packages:${PYTHONPATH} VIRTUAL_ENV_PROMPT=(.venv) /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/open01_bringup build --build-base /home/open01/open-01/robot_ros2/ros2_ws/build/open01_bringup/build install --record /home/open01/open-01/robot_ros2/ros2_ws/build/open01_bringup/install.log --single-version-externally-managed install_data
+[25.893s] Level 1:colcon.colcon_core.environment:checking '/home/open01/open-01/robot_ros2/ros2_ws/install/open01_bringup' for CMake config files
+[25.902s] Level 1:colcon.colcon_core.environment:checking '/home/open01/open-01/robot_ros2/ros2_ws/install/open01_bringup/lib'
+[25.903s] Level 1:colcon.colcon_core.environment:checking '/home/open01/open-01/robot_ros2/ros2_ws/install/open01_bringup/bin'
+[25.904s] Level 1:colcon.colcon_core.environment:checking '/home/open01/open-01/robot_ros2/ros2_ws/install/open01_bringup/lib/pkgconfig/open01_bringup.pc'
+[25.907s] Level 1:colcon.colcon_core.environment:checking '/home/open01/open-01/robot_ros2/ros2_ws/install/open01_bringup/lib/python3.10/site-packages'
+[25.908s] Level 1:colcon.colcon_core.shell:create_environment_hook('open01_bringup', 'pythonpath')
+[25.910s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/open01/open-01/robot_ros2/ros2_ws/install/open01_bringup/share/open01_bringup/hook/pythonpath.ps1'
+[25.915s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/open01/open-01/robot_ros2/ros2_ws/install/open01_bringup/share/open01_bringup/hook/pythonpath.dsv'
+[25.920s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/open01/open-01/robot_ros2/ros2_ws/install/open01_bringup/share/open01_bringup/hook/pythonpath.sh'
+[25.928s] Level 1:colcon.colcon_core.environment:checking '/home/open01/open-01/robot_ros2/ros2_ws/install/open01_bringup/bin'
+[25.930s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(open01_bringup)
+[25.934s] INFO:colcon.colcon_core.shell:Creating package script '/home/open01/open-01/robot_ros2/ros2_ws/install/open01_bringup/share/open01_bringup/package.ps1'
+[25.940s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/open01/open-01/robot_ros2/ros2_ws/install/open01_bringup/share/open01_bringup/package.dsv'
+[25.945s] INFO:colcon.colcon_core.shell:Creating package script '/home/open01/open-01/robot_ros2/ros2_ws/install/open01_bringup/share/open01_bringup/package.sh'
+[25.951s] INFO:colcon.colcon_core.shell:Creating package script '/home/open01/open-01/robot_ros2/ros2_ws/install/open01_bringup/share/open01_bringup/package.bash'
+[25.956s] INFO:colcon.colcon_core.shell:Creating package script '/home/open01/open-01/robot_ros2/ros2_ws/install/open01_bringup/share/open01_bringup/package.zsh'
+[25.961s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/open01/open-01/robot_ros2/ros2_ws/install/open01_bringup/share/colcon-core/packages/open01_bringup)
+[25.964s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:closing loop
+[25.966s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:loop closed
+[25.967s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:run_until_complete finished with '0'
+[25.968s] DEBUG:colcon.colcon_core.event_reactor:joining thread
+[26.021s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.notify_send': Could not find 'notify-send'
+[26.023s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.terminal_notifier': Not used on non-Darwin systems
+[26.023s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.win32': Not used on non-Windows systems
+[26.024s] INFO:colcon.colcon_notification.desktop_notification:Sending desktop notification using 'notify2'
+[26.030s] DEBUG:colcon.colcon_notification.desktop_notification.notify2:Failed to initialize notify2: org.freedesktop.DBus.Error.ServiceUnknown: The name org.freedesktop.Notifications was not provided by any .service files
+[26.031s] DEBUG:colcon.colcon_core.event_reactor:joined thread
+[26.034s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/open01/open-01/robot_ros2/ros2_ws/install/local_setup.ps1'
+[26.044s] INFO:colcon.colcon_core.shell:Creating prefix util module '/home/open01/open-01/robot_ros2/ros2_ws/install/_local_setup_util_ps1.py'
+[26.061s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/open01/open-01/robot_ros2/ros2_ws/install/setup.ps1'
+[26.070s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/open01/open-01/robot_ros2/ros2_ws/install/local_setup.sh'
+[26.077s] INFO:colcon.colcon_core.shell:Creating prefix util module '/home/open01/open-01/robot_ros2/ros2_ws/install/_local_setup_util_sh.py'
+[26.083s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/open01/open-01/robot_ros2/ros2_ws/install/setup.sh'
+[26.093s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/open01/open-01/robot_ros2/ros2_ws/install/local_setup.bash'
+[26.099s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/open01/open-01/robot_ros2/ros2_ws/install/setup.bash'
+[26.109s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/open01/open-01/robot_ros2/ros2_ws/install/local_setup.zsh'
+[26.115s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/open01/open-01/robot_ros2/ros2_ws/install/setup.zsh'

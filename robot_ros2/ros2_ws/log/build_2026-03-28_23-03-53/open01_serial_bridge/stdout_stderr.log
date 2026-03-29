@@ -1,0 +1,39 @@
+running egg_info
+creating ../../build/open01_serial_bridge/open01_serial_bridge.egg-info
+writing ../../build/open01_serial_bridge/open01_serial_bridge.egg-info/PKG-INFO
+writing dependency_links to ../../build/open01_serial_bridge/open01_serial_bridge.egg-info/dependency_links.txt
+writing entry points to ../../build/open01_serial_bridge/open01_serial_bridge.egg-info/entry_points.txt
+writing requirements to ../../build/open01_serial_bridge/open01_serial_bridge.egg-info/requires.txt
+writing top-level names to ../../build/open01_serial_bridge/open01_serial_bridge.egg-info/top_level.txt
+writing manifest file '../../build/open01_serial_bridge/open01_serial_bridge.egg-info/SOURCES.txt'
+reading manifest file '../../build/open01_serial_bridge/open01_serial_bridge.egg-info/SOURCES.txt'
+writing manifest file '../../build/open01_serial_bridge/open01_serial_bridge.egg-info/SOURCES.txt'
+running build
+running build_py
+creating /home/open01/open-01/robot_ros2/ros2_ws/build/open01_serial_bridge/build
+creating /home/open01/open-01/robot_ros2/ros2_ws/build/open01_serial_bridge/build/lib
+creating /home/open01/open-01/robot_ros2/ros2_ws/build/open01_serial_bridge/build/lib/open01_serial_bridge
+copying open01_serial_bridge/__init__.py -> /home/open01/open-01/robot_ros2/ros2_ws/build/open01_serial_bridge/build/lib/open01_serial_bridge
+copying open01_serial_bridge/lidar_node.py -> /home/open01/open-01/robot_ros2/ros2_ws/build/open01_serial_bridge/build/lib/open01_serial_bridge
+copying open01_serial_bridge/serial_bridge_node.py -> /home/open01/open-01/robot_ros2/ros2_ws/build/open01_serial_bridge/build/lib/open01_serial_bridge
+running install
+running install_lib
+creating /home/open01/open-01/robot_ros2/ros2_ws/install/open01_serial_bridge/lib/python3.10/site-packages/open01_serial_bridge
+copying /home/open01/open-01/robot_ros2/ros2_ws/build/open01_serial_bridge/build/lib/open01_serial_bridge/__init__.py -> /home/open01/open-01/robot_ros2/ros2_ws/install/open01_serial_bridge/lib/python3.10/site-packages/open01_serial_bridge
+copying /home/open01/open-01/robot_ros2/ros2_ws/build/open01_serial_bridge/build/lib/open01_serial_bridge/lidar_node.py -> /home/open01/open-01/robot_ros2/ros2_ws/install/open01_serial_bridge/lib/python3.10/site-packages/open01_serial_bridge
+copying /home/open01/open-01/robot_ros2/ros2_ws/build/open01_serial_bridge/build/lib/open01_serial_bridge/serial_bridge_node.py -> /home/open01/open-01/robot_ros2/ros2_ws/install/open01_serial_bridge/lib/python3.10/site-packages/open01_serial_bridge
+byte-compiling /home/open01/open-01/robot_ros2/ros2_ws/install/open01_serial_bridge/lib/python3.10/site-packages/open01_serial_bridge/__init__.py to __init__.cpython-310.pyc
+byte-compiling /home/open01/open-01/robot_ros2/ros2_ws/install/open01_serial_bridge/lib/python3.10/site-packages/open01_serial_bridge/lidar_node.py to lidar_node.cpython-310.pyc
+byte-compiling /home/open01/open-01/robot_ros2/ros2_ws/install/open01_serial_bridge/lib/python3.10/site-packages/open01_serial_bridge/serial_bridge_node.py to serial_bridge_node.cpython-310.pyc
+running install_data
+creating /home/open01/open-01/robot_ros2/ros2_ws/install/open01_serial_bridge/share/ament_index
+creating /home/open01/open-01/robot_ros2/ros2_ws/install/open01_serial_bridge/share/ament_index/resource_index
+creating /home/open01/open-01/robot_ros2/ros2_ws/install/open01_serial_bridge/share/ament_index/resource_index/packages
+copying resource/open01_serial_bridge -> /home/open01/open-01/robot_ros2/ros2_ws/install/open01_serial_bridge/share/ament_index/resource_index/packages
+copying package.xml -> /home/open01/open-01/robot_ros2/ros2_ws/install/open01_serial_bridge/share/open01_serial_bridge
+running install_egg_info
+Copying ../../build/open01_serial_bridge/open01_serial_bridge.egg-info to /home/open01/open-01/robot_ros2/ros2_ws/install/open01_serial_bridge/lib/python3.10/site-packages/open01_serial_bridge-0.1.0-py3.10.egg-info
+running install_scripts
+Installing lidar script to /home/open01/open-01/robot_ros2/ros2_ws/install/open01_serial_bridge/lib/open01_serial_bridge
+Installing serial_bridge script to /home/open01/open-01/robot_ros2/ros2_ws/install/open01_serial_bridge/lib/open01_serial_bridge
+writing list of installed files to '/home/open01/open-01/robot_ros2/ros2_ws/build/open01_serial_bridge/install.log'

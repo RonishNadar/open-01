@@ -1,1 +1,16 @@
-/home/ubuntu/open-01/robot_ros2/ros2_ws/build/open01_bringup/package.xml
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>open01_bringup</name>
+  <version>0.1.0</version>
+  <description>Launch files for OPEN-01 robot</description>
+  <maintainer email="you@example.com">Ronish</maintainer>
+  <license>Apache-2.0</license>
+
+  <exec_depend>rclpy</exec_depend>
+  <exec_depend>open01_serial_bridge</exec_depend>
+
+  <export>
+    <build_type>ament_python</build_type>
+  </export>
+</package>

@@ -1,6 +1,0 @@
-[0.000000] (-) TimerEvent: {}
-[0.000893] (-) JobUnselected: {'identifier': 'open01_serial_bridge'}
-[0.001580] (open01_bringup) JobQueued: {'identifier': 'open01_bringup', 'dependencies': OrderedDict({'open01_serial_bridge': '/home/ubuntu/open-01/robot_ros2/ros2_ws/install/open01_serial_bridge'})}
-[0.004045] (open01_bringup) JobStarted: {'identifier': 'open01_bringup'}
-[0.081975] (open01_bringup) JobEnded: {'identifier': 'open01_bringup', 'rc': 1}
-[0.094319] (-) EventReactorShutdown: {}

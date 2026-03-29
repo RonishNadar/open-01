@@ -1,0 +1,25 @@
+[7.354s] Invoking command in '/home/open01/open-01/robot_ros2/ros2_ws/src/open01_serial_bridge': PS1=(.venv) \[\e]0;\u@\h: \w\a\]${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ PYTHONPATH=/home/open01/open-01/robot_ros2/ros2_ws/build/open01_serial_bridge/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/open01/open-01/robot_ros2/ros2_ws/install/open01_serial_bridge/lib/python3.10/site-packages:${PYTHONPATH} VIRTUAL_ENV_PROMPT=(.venv) /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/open01_serial_bridge build --build-base /home/open01/open-01/robot_ros2/ros2_ws/build/open01_serial_bridge/build install --record /home/open01/open-01/robot_ros2/ros2_ws/build/open01_serial_bridge/install.log --single-version-externally-managed install_data
+[10.233s] running egg_info
+[10.239s] writing ../../build/open01_serial_bridge/open01_serial_bridge.egg-info/PKG-INFO
+[10.242s] writing dependency_links to ../../build/open01_serial_bridge/open01_serial_bridge.egg-info/dependency_links.txt
+[10.245s] writing entry points to ../../build/open01_serial_bridge/open01_serial_bridge.egg-info/entry_points.txt
+[10.246s] writing requirements to ../../build/open01_serial_bridge/open01_serial_bridge.egg-info/requires.txt
+[10.248s] writing top-level names to ../../build/open01_serial_bridge/open01_serial_bridge.egg-info/top_level.txt
+[10.266s] reading manifest file '../../build/open01_serial_bridge/open01_serial_bridge.egg-info/SOURCES.txt'
+[10.279s] writing manifest file '../../build/open01_serial_bridge/open01_serial_bridge.egg-info/SOURCES.txt'
+[10.280s] running build
+[10.281s] running build_py
+[10.283s] copying open01_serial_bridge/serial_bridge_node.py -> /home/open01/open-01/robot_ros2/ros2_ws/build/open01_serial_bridge/build/lib/open01_serial_bridge
+[10.286s] running install
+[10.289s] running install_lib
+[10.298s] copying /home/open01/open-01/robot_ros2/ros2_ws/build/open01_serial_bridge/build/lib/open01_serial_bridge/serial_bridge_node.py -> /home/open01/open-01/robot_ros2/ros2_ws/install/open01_serial_bridge/lib/python3.10/site-packages/open01_serial_bridge
+[10.305s] byte-compiling /home/open01/open-01/robot_ros2/ros2_ws/install/open01_serial_bridge/lib/python3.10/site-packages/open01_serial_bridge/serial_bridge_node.py to serial_bridge_node.cpython-310.pyc
+[10.333s] running install_data
+[10.335s] running install_egg_info
+[10.352s] removing '/home/open01/open-01/robot_ros2/ros2_ws/install/open01_serial_bridge/lib/python3.10/site-packages/open01_serial_bridge-0.1.0-py3.10.egg-info' (and everything under it)
+[10.356s] Copying ../../build/open01_serial_bridge/open01_serial_bridge.egg-info to /home/open01/open-01/robot_ros2/ros2_ws/install/open01_serial_bridge/lib/python3.10/site-packages/open01_serial_bridge-0.1.0-py3.10.egg-info
+[10.371s] running install_scripts
+[10.567s] Installing lidar script to /home/open01/open-01/robot_ros2/ros2_ws/install/open01_serial_bridge/lib/open01_serial_bridge
+[10.570s] Installing serial_bridge script to /home/open01/open-01/robot_ros2/ros2_ws/install/open01_serial_bridge/lib/open01_serial_bridge
+[10.573s] writing list of installed files to '/home/open01/open-01/robot_ros2/ros2_ws/build/open01_serial_bridge/install.log'
+[10.857s] Invoked command in '/home/open01/open-01/robot_ros2/ros2_ws/src/open01_serial_bridge' returned '0': PS1=(.venv) \[\e]0;\u@\h: \w\a\]${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ PYTHONPATH=/home/open01/open-01/robot_ros2/ros2_ws/build/open01_serial_bridge/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/open01/open-01/robot_ros2/ros2_ws/install/open01_serial_bridge/lib/python3.10/site-packages:${PYTHONPATH} VIRTUAL_ENV_PROMPT=(.venv) /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/open01_serial_bridge build --build-base /home/open01/open-01/robot_ros2/ros2_ws/build/open01_serial_bridge/build install --record /home/open01/open-01/robot_ros2/ros2_ws/build/open01_serial_bridge/install.log --single-version-externally-managed install_data
