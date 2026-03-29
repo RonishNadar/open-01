@@ -23,7 +23,7 @@ from rclpy.qos import QoSProfile, ReliabilityPolicy, HistoryPolicy
 import serial
 
 from std_msgs.msg import Float32
-from sensor_msgs.msg import Imu, BatteryState, Range
+from sensor_msgs.msg import Imu, BatteryState, Range, JointState
 from nav_msgs.msg import Odometry
 from geometry_msgs.msg import Twist, TransformStamped
 from tf2_ros import TransformBroadcaster
@@ -104,7 +104,7 @@ class PacketParser:
         self._payload_len = 0
         self._payload     = bytearray()
         self._crc_hi      = 0
-        self._packets     = deque()   # completed (msg_type, payload) tuples
+        self._packets     = deque()
         self.bytes_rx     = 0
         self.packets_ok   = 0
         self.crc_errors   = 0
@@ -116,8 +116,8 @@ class PacketParser:
             self._process_byte(byte)
 
     def _reset(self):
-        self._state       = self.WAIT_START1
-        self._payload     = bytearray()
+        self._state   = self.WAIT_START1
+        self._payload = bytearray()
 
     def _process_byte(self, b: int):
         s = self._state
@@ -178,7 +178,6 @@ class PacketParser:
             self._reset()
 
     def pop_packet(self):
-        """Returns (msg_type, payload) or None."""
         return self._packets.popleft() if self._packets else None
 
     def has_packet(self) -> bool:
@@ -188,19 +187,23 @@ class PacketParser:
 
 class SerialBridgeNode(Node):
 
+    # Wheel geometry from URDF
+    WHEEL_BASE   = 0.2065    # y offset = 0.10325 * 2
+    WHEEL_RADIUS = 0.03432   # z offset from base_link to wheel center
+
     def __init__(self):
         super().__init__('serial_bridge')
 
         # ── Parameters ──
-        self.declare_parameter('port',     '/dev/ttyS0')
-        self.declare_parameter('baud',     460800)
+        self.declare_parameter('port',          '/dev/ttyS0')
+        self.declare_parameter('baud',          460800)
         self.declare_parameter('base_frame_id', 'base_link')
         self.declare_parameter('odom_frame_id', 'odom')
         self.declare_parameter('imu_frame_id',  'imu_link')
         self.declare_parameter('publish_tf',    True)
 
-        port     = self.get_parameter('port').value
-        baud     = self.get_parameter('baud').value
+        port             = self.get_parameter('port').value
+        baud             = self.get_parameter('baud').value
         self._base_frame = self.get_parameter('base_frame_id').value
         self._odom_frame = self.get_parameter('odom_frame_id').value
         self._imu_frame  = self.get_parameter('imu_frame_id').value
@@ -214,14 +217,14 @@ class SerialBridgeNode(Node):
                 bytesize=serial.EIGHTBITS,
                 parity=serial.PARITY_NONE,
                 stopbits=serial.STOPBITS_ONE,
-                timeout=0.02,   # 20ms read timeout (non-blocking feel)
+                timeout=0.02,
             )
             self.get_logger().info(f'Opened serial port {port} @ {baud} baud')
         except serial.SerialException as e:
             self.get_logger().fatal(f'Cannot open serial port {port}: {e}')
             raise
 
-        self._parser = PacketParser()
+        self._parser      = PacketParser()
         self._serial_lock = threading.Lock()
 
         # ── QoS ──
@@ -232,12 +235,13 @@ class SerialBridgeNode(Node):
         )
 
         # ── Publishers ──
-        self._pub_odom    = self.create_publisher(Odometry,      '/odom',          sensor_qos)
-        self._pub_imu     = self.create_publisher(Imu,           '/imu/data',      sensor_qos)
-        self._pub_battery = self.create_publisher(BatteryState,  '/battery_state', sensor_qos)
-        self._pub_tof_l   = self.create_publisher(Range,         '/tof/left',      sensor_qos)
-        self._pub_tof_b   = self.create_publisher(Range,         '/tof/back',      sensor_qos)
-        self._pub_tof_r   = self.create_publisher(Range,         '/tof/right',     sensor_qos)
+        self._pub_odom         = self.create_publisher(Odometry,     '/odom',          sensor_qos)
+        self._pub_imu          = self.create_publisher(Imu,          '/imu/data',      sensor_qos)
+        self._pub_battery      = self.create_publisher(BatteryState, '/battery_state', sensor_qos)
+        self._pub_tof_l        = self.create_publisher(Range,        '/tof/left',      sensor_qos)
+        self._pub_tof_b        = self.create_publisher(Range,        '/tof/back',      sensor_qos)
+        self._pub_tof_r        = self.create_publisher(Range,        '/tof/right',     sensor_qos)
+        self._pub_joint_states = self.create_publisher(JointState,   '/joint_states',  sensor_qos)
 
         # ── TF broadcaster ──
         if self._publish_tf:
@@ -247,33 +251,30 @@ class SerialBridgeNode(Node):
         self._sub_cmdvel = self.create_subscription(
             Twist, '/cmd_vel', self._cmd_vel_cb, 10)
 
-        # ── RX processing timer (100Hz — faster than telemetry rate) ──
-        self._rx_timer = self.create_timer(0.01, self._rx_timer_cb)
-
-        # ── Diagnostics timer (5s) ──
-        self._diag_timer = self.create_timer(5.0, self._diag_cb)
+        # ── Timers ──
+        self._rx_timer   = self.create_timer(0.01, self._rx_timer_cb)
+        self._diag_timer = self.create_timer(5.0,  self._diag_cb)
 
         # ── RX thread ──
-        self._rx_buf = deque()
+        self._rx_buf      = deque()
         self._rx_buf_lock = threading.Lock()
-        self._running = True
-        self._rx_thread = threading.Thread(target=self._rx_thread_fn, daemon=True)
+        self._running     = True
+        self._rx_thread   = threading.Thread(target=self._rx_thread_fn, daemon=True)
         self._rx_thread.start()
 
-        # ── Odom state (integrate in node for TF) ──
-        self._odom_x     = 0.0
-        self._odom_y     = 0.0
-        self._odom_theta = 0.0
+        # ── Wheel position accumulators ──
+        self._wheel_left_pos  = 0.0
+        self._wheel_right_pos = 0.0
+        self._last_odom_time  = None
 
         self.get_logger().info('serial_bridge node started')
 
-    # ── RX thread: reads bytes, pushes to buffer ─────────────────────────────
+    # ── RX thread ────────────────────────────────────────────────────────────
 
     def _rx_thread_fn(self):
-        """Dedicated thread: reads raw bytes from serial, queues them."""
         while self._running:
             try:
-                data = self._serial.read(256)   # up to 256B per call
+                data = self._serial.read(256)
                 if data:
                     with self._rx_buf_lock:
                         self._rx_buf.append(data)
@@ -281,10 +282,9 @@ class SerialBridgeNode(Node):
                 self.get_logger().error(f'Serial read error: {e}')
                 time.sleep(0.1)
 
-    # ── RX timer: drains buffer, parses packets, publishes ───────────────────
+    # ── RX timer ─────────────────────────────────────────────────────────────
 
     def _rx_timer_cb(self):
-        """Called at 100Hz in ROS2 spin thread. Parses buffered bytes."""
         chunks = []
         with self._rx_buf_lock:
             while self._rx_buf:
@@ -308,7 +308,6 @@ class SerialBridgeNode(Node):
     # ── Telemetry parser ─────────────────────────────────────────────────────
 
     def _parse_telemetry(self, payload: bytes):
-        """Walk sub-blocks and dispatch each."""
         now = self.get_clock().now().to_msg()
         idx = 0
         imu_data = odom_data = tof_data = battery_data = ts_data = None
@@ -339,15 +338,10 @@ class SerialBridgeNode(Node):
                 self.get_logger().debug(
                     f'Unknown sub_id=0x{sub_id:02X} len={sub_len}')
 
-        # Publish what we got
-        if imu_data is not None:
-            self._publish_imu(imu_data, now)
-        if odom_data is not None:
-            self._publish_odom(odom_data, now)
-        if tof_data is not None:
-            self._publish_tof(tof_data, now)
-        if battery_data is not None:
-            self._publish_battery(battery_data, now)
+        if imu_data     is not None: self._publish_imu(imu_data, now)
+        if odom_data    is not None: self._publish_odom(odom_data, now)
+        if tof_data     is not None: self._publish_tof(tof_data, now)
+        if battery_data is not None: self._publish_battery(battery_data, now)
 
     # ── Publishers ───────────────────────────────────────────────────────────
 
@@ -364,24 +358,19 @@ class SerialBridgeNode(Node):
         msg.angular_velocity.y    = gy
         msg.angular_velocity.z    = gz
 
-        # Orientation unknown — set covariance[0] = -1 to signal unknown
-        msg.orientation_covariance[0] = -1.0
-
-        # Covariances: rough defaults for MPU6500
-        # Accel: ~0.01 (m/s²)², Gyro: ~0.001 (rad/s)²
-        msg.linear_acceleration_covariance[0] = 0.01
-        msg.linear_acceleration_covariance[4] = 0.01
-        msg.linear_acceleration_covariance[8] = 0.01
-        msg.angular_velocity_covariance[0]    = 0.001
-        msg.angular_velocity_covariance[4]    = 0.001
-        msg.angular_velocity_covariance[8]    = 0.001
+        msg.orientation_covariance[0]          = -1.0
+        msg.linear_acceleration_covariance[0]  = 0.01
+        msg.linear_acceleration_covariance[4]  = 0.01
+        msg.linear_acceleration_covariance[8]  = 0.01
+        msg.angular_velocity_covariance[0]     = 0.001
+        msg.angular_velocity_covariance[4]     = 0.001
+        msg.angular_velocity_covariance[8]     = 0.001
 
         self._pub_imu.publish(msg)
 
     def _publish_odom(self, data, stamp):
         x, y, theta, linear, angular, _ = data
 
-        # Build quaternion from yaw (theta)
         qz = math.sin(theta / 2.0)
         qw = math.cos(theta / 2.0)
 
@@ -390,9 +379,9 @@ class SerialBridgeNode(Node):
         msg.header.frame_id = self._odom_frame
         msg.child_frame_id  = self._base_frame
 
-        msg.pose.pose.position.x  = x
-        msg.pose.pose.position.y  = y
-        msg.pose.pose.position.z  = 0.0
+        msg.pose.pose.position.x    = x
+        msg.pose.pose.position.y    = y
+        msg.pose.pose.position.z    = 0.0
         msg.pose.pose.orientation.x = 0.0
         msg.pose.pose.orientation.y = 0.0
         msg.pose.pose.orientation.z = qz
@@ -401,10 +390,9 @@ class SerialBridgeNode(Node):
         msg.twist.twist.linear.x  = linear
         msg.twist.twist.angular.z = angular
 
-        # Covariance diagonals — conservative defaults
-        msg.pose.covariance[0]  = 0.01   # x
-        msg.pose.covariance[7]  = 0.01   # y
-        msg.pose.covariance[35] = 0.05   # yaw
+        msg.pose.covariance[0]   = 0.01
+        msg.pose.covariance[7]   = 0.01
+        msg.pose.covariance[35]  = 0.05
         msg.twist.covariance[0]  = 0.01
         msg.twist.covariance[35] = 0.05
 
@@ -423,18 +411,38 @@ class SerialBridgeNode(Node):
             tf.transform.rotation.w    = qw
             self._tf_broadcaster.sendTransform(tf)
 
+        # ── Integrate wheel positions and publish /joint_states ──
+        now_sec = stamp.sec + stamp.nanosec * 1e-9
+        if self._last_odom_time is not None:
+            dt = now_sec - self._last_odom_time
+            if 0 < dt < 0.5:   # guard against stale timestamps
+                v_left  = linear - (angular * self.WHEEL_BASE / 2.0)
+                v_right = linear + (angular * self.WHEEL_BASE / 2.0)
+                self._wheel_left_pos  += (v_left  / self.WHEEL_RADIUS) * dt
+                self._wheel_right_pos += (v_right / self.WHEEL_RADIUS) * dt
+
+        self._last_odom_time = now_sec
+
+        js = JointState()
+        js.header.stamp = stamp
+        js.name         = ['Left_Wheel', 'Right_Wheel']
+        js.position     = [self._wheel_left_pos, self._wheel_right_pos]
+        js.velocity     = [0.0, 0.0]
+        js.effort       = [0.0, 0.0]
+        self._pub_joint_states.publish(js)
+
     def _publish_tof(self, data, stamp):
         left_mm, right_mm, back_mm = data
 
-        def make_range(frame_id, range_m):
+        def make_range(frame_id, range_mm):
             msg = Range()
             msg.header.stamp    = stamp
             msg.header.frame_id = frame_id
             msg.radiation_type  = Range.INFRARED
-            msg.field_of_view   = 0.44      # ~25° FOV for VL53L0X
-            msg.min_range       = 0.03      # 30mm
-            msg.max_range       = 1.20      # 1200mm typical reliable range
-            msg.range           = float(range_m) / 1000.0
+            msg.field_of_view   = 0.44
+            msg.min_range       = 0.03
+            msg.max_range       = 1.20
+            msg.range           = float(range_mm) / 1000.0
             return msg
 
         self._pub_tof_l.publish(make_range('tof_left',  left_mm))
@@ -447,25 +455,22 @@ class SerialBridgeNode(Node):
         msg.voltage      = voltage
         msg.present      = True
 
-        # Estimate % for 3S Li-Ion: 12.6V=100%, 9.0V=0%
         pct = max(0.0, min(1.0, (voltage - 9.0) / (12.6 - 9.0)))
         msg.percentage   = pct
 
-        # Unknown fields → NaN
-        msg.current      = float('nan')
-        msg.charge       = float('nan')
-        msg.capacity     = float('nan')
-        msg.design_capacity = float('nan')
+        msg.current             = float('nan')
+        msg.charge              = float('nan')
+        msg.capacity            = float('nan')
+        msg.design_capacity     = float('nan')
         msg.power_supply_status = BatteryState.POWER_SUPPLY_STATUS_UNKNOWN
         msg.power_supply_health = BatteryState.POWER_SUPPLY_HEALTH_UNKNOWN
         msg.power_supply_technology = BatteryState.POWER_SUPPLY_TECHNOLOGY_LION
 
         self._pub_battery.publish(msg)
 
-    # ── cmd_vel subscriber → TX ───────────────────────────────────────────────
+    # ── cmd_vel → TX ─────────────────────────────────────────────────────────
 
     def _cmd_vel_cb(self, msg: Twist):
-        """Encode and send CMD_VELOCITY packet to ESP32."""
         payload = struct.pack('<3f',
                               msg.linear.x,
                               msg.linear.y,
