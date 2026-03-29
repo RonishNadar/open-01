@@ -40,7 +40,45 @@
 # debug information files
 *.dwo
 
-# Project build/config files
+# ROS2 build artifacts
+robot_ros2/build/
+robot_ros2/install/
+robot_ros2/log/
+robot_ros2/ros2_ws/install/
+robot_ros2/ros2_ws/log/
+robot_ros2/ros2_ws/build/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+.seb/
+
+# ROS2 colcon
+COLCON_IGNORE
+
+# ESP-IDF / Firmware
 robot_firmware/build/
 robot_firmware/sdkconfig
 robot_firmware/sdkconfig.*
+robot_firmware/.pio/
+robot_firmware/managed_components/
+
+# Colcon artifacts
+build/
+install/
+log/
+
+# SolidWorks
+*.swp
+*.swo
+*.bak
+*.lck
+
+# VSCode
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db

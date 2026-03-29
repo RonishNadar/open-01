@@ -1,4 +1,0 @@
-[console_scripts]
-lidar = open01_serial_bridge.lidar_node:main
-serial_bridge = open01_serial_bridge.serial_bridge_node:main
-
