@@ -14,7 +14,7 @@
         <mesh filename="package://open01_description/meshes/base_link.stl"/>
       </geometry>
       <material name="">
-        <color rgba="1 0.807843137254902 0.498039215686275 1"/>
+        <color rgba="0.44 0.31 0.78 1"/>
       </material>
     </visual>
     <collision>
@@ -38,7 +38,7 @@
         <mesh filename="package://open01_description/meshes/Left_Wheel.stl"/>
       </geometry>
       <material name="">
-        <color rgba="0.109803921568627 0.109803921568627 0.109803921568627 1"/>
+        <color rgba="0.2 0.2 0.2 1"/>
       </material>
     </visual>
     <collision>
@@ -69,7 +69,7 @@
         <mesh filename="package://open01_description/meshes/Right_Wheel.stl"/>
       </geometry>
       <material name="">
-        <color rgba="0.776470588235294 0.756862745098039 0.737254901960784 1"/>
+        <color rgba="0.1 0.1 0.1 1"/>
       </material>
     </visual>
     <collision>
@@ -117,7 +117,7 @@
         <mesh filename="package://open01_description/meshes/TOF_Left.stl"/>
       </geometry>
       <material name="">
-        <color rgba="0.752941176470588 0.752941176470588 0.752941176470588 1"/>
+        <color rgba="1 0.5 0 1"/>
       </material>
     </visual>
     <collision>
@@ -148,7 +148,7 @@
         <mesh filename="package://open01_description/meshes/TOF_Back.stl"/>
       </geometry>
       <material name="">
-        <color rgba="0.752941176470588 0.752941176470588 0.752941176470588 1"/>
+        <color rgba="1 0.5 0 1"/>
       </material>
     </visual>
     <collision>
@@ -179,7 +179,7 @@
         <mesh filename="package://open01_description/meshes/TOF_Right.stl"/>
       </geometry>
       <material name="">
-        <color rgba="0.752941176470588 0.752941176470588 0.752941176470588 1"/>
+        <color rgba="1 0.5 0 1"/>
       </material>
     </visual>
     <collision>
