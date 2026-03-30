@@ -1,365 +1,200 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by Stephen Brawner (brawner@gmail.com) 
-     Commit Version: 1.6.0-4-g7f85cfe  Build Version: 1.6.7995.38578
-     For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
-<robot
-  name="open01_description">
-  <link
-    name="base_link">
+<robot name="open01_description">
+
+  <link name="base_link">
     <inertial>
-      <origin
-        xyz="0.0228350285474035 -7.73458872581888E-05 0.0622801268235042"
-        rpy="0 0 0" />
-      <mass
-        value="0.903886172842921" />
-      <inertia
-        ixx="0.00140829832797453"
-        ixy="1.95394441629631E-06"
-        ixz="1.19331191374903E-05"
-        iyy="0.00138067792056244"
-        iyz="-4.74315869414272E-07"
-        izz="0.00237049117589235" />
+      <origin xyz="0.0228350285474035 -7.73458872581888E-05 0.0622801268235042" rpy="0 0 0"/>
+      <mass value="0.903886172842921"/>
+      <inertia ixx="0.00140829832797453" ixy="1.95394441629631E-06" ixz="1.19331191374903E-05"
+               iyy="0.00138067792056244" iyz="-4.74315869414272E-07" izz="0.00237049117589235"/>
     </inertial>
     <visual>
-      <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
+      <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh
-          filename="package://open01_description/meshes/base_link.STL" />
+        <mesh filename="package://open01_description/meshes/base_link.stl"/>
       </geometry>
-      <material
-        name="">
-        <color
-          rgba="1 0.807843137254902 0.498039215686275 1" />
+      <material name="">
+        <color rgba="1 0.807843137254902 0.498039215686275 1"/>
       </material>
     </visual>
     <collision>
-      <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
+      <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh
-          filename="package://open01_description/meshes/base_link.STL" />
+        <mesh filename="package://open01_description/meshes/base_link.stl"/>
       </geometry>
     </collision>
   </link>
-  <link
-    name="Left_Wheel">
+
+  <link name="Left_Wheel">
     <inertial>
-      <origin
-        xyz="8.84376602599207E-11 -5.61340834925872E-11 -5.07110154522872E-05"
-        rpy="0 0 0" />
-      <mass
-        value="0.0817522915412876" />
-      <inertia
-        ixx="2.70032173523163E-05"
-        ixy="-1.97061181019603E-09"
-        ixz="2.55537546086817E-14"
-        iyy="2.70020617270972E-05"
-        iyz="-1.02853341332139E-14"
-        izz="4.73688161589657E-05" />
+      <origin xyz="8.84376602599207E-11 -5.61340834925872E-11 -5.07110154522872E-05" rpy="0 0 0"/>
+      <mass value="0.0817522915412876"/>
+      <inertia ixx="2.70032173523163E-05" ixy="-1.97061181019603E-09" ixz="2.55537546086817E-14"
+               iyy="2.70020617270972E-05" iyz="-1.02853341332139E-14" izz="4.73688161589657E-05"/>
     </inertial>
     <visual>
-      <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
+      <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh
-          filename="package://open01_description/meshes/Left_Wheel.STL" />
+        <mesh filename="package://open01_description/meshes/Left_Wheel.stl"/>
       </geometry>
-      <material
-        name="">
-        <color
-          rgba="0.109803921568627 0.109803921568627 0.109803921568627 1" />
+      <material name="">
+        <color rgba="0.109803921568627 0.109803921568627 0.109803921568627 1"/>
       </material>
     </visual>
     <collision>
-      <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
+      <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh
-          filename="package://open01_description/meshes/Left_Wheel.STL" />
+        <mesh filename="package://open01_description/meshes/Left_Wheel.stl"/>
       </geometry>
     </collision>
   </link>
-  <joint
-    name="Left_Wheel"
-    type="continuous">
-    <origin
-      xyz="0 0.10325 0.03432"
-      rpy="1.5708 0 3.1416" />
-    <parent
-      link="base_link" />
-    <child
-      link="Left_Wheel" />
-    <axis
-      xyz="0 0 -1" />
+
+  <joint name="Left_Wheel" type="continuous">
+    <origin xyz="0 0.10325 0.03432" rpy="1.5708 0 3.1416"/>
+    <parent link="base_link"/>
+    <child link="Left_Wheel"/>
+    <axis xyz="0 0 -1"/>
   </joint>
-  <link
-    name="Right_Wheel">
+
+  <link name="Right_Wheel">
     <inertial>
-      <origin
-        xyz="9.74444551762892E-11 3.84137825715225E-11 -5.07110254833049E-05"
-        rpy="0 0 0" />
-      <mass
-        value="0.0817523594195921" />
-      <inertia
-        ixx="2.70043809489769E-05"
-        ixy="1.15370227726337E-09"
-        ixz="2.33599581416277E-14"
-        iyy="2.70009832148061E-05"
-        iyz="1.4594411097233E-14"
-        izz="4.73688623615985E-05" />
+      <origin xyz="9.74444551762892E-11 3.84137825715225E-11 -5.07110254833049E-05" rpy="0 0 0"/>
+      <mass value="0.0817523594195921"/>
+      <inertia ixx="2.70043809489769E-05" ixy="1.15370227726337E-09" ixz="2.33599581416277E-14"
+               iyy="2.70009832148061E-05" iyz="1.4594411097233E-14" izz="4.73688623615985E-05"/>
     </inertial>
     <visual>
-      <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
+      <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh
-          filename="package://open01_description/meshes/Right_Wheel.STL" />
+        <mesh filename="package://open01_description/meshes/Right_Wheel.stl"/>
       </geometry>
-      <material
-        name="">
-        <color
-          rgba="0.776470588235294 0.756862745098039 0.737254901960784 1" />
+      <material name="">
+        <color rgba="0.776470588235294 0.756862745098039 0.737254901960784 1"/>
       </material>
     </visual>
     <collision>
-      <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
+      <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh
-          filename="package://open01_description/meshes/Right_Wheel.STL" />
+        <mesh filename="package://open01_description/meshes/Right_Wheel.stl"/>
       </geometry>
     </collision>
   </link>
-  <joint
-    name="Right_Wheel"
-    type="continuous">
-    <origin
-      xyz="0 -0.10325 0.03432"
-      rpy="1.5708 0 0" />
-    <parent
-      link="base_link" />
-    <child
-      link="Right_Wheel" />
-    <axis
-      xyz="0 0 -1" />
+
+  <joint name="Right_Wheel" type="continuous">
+    <origin xyz="0 -0.10325 0.03432" rpy="1.5708 0 0"/>
+    <parent link="base_link"/>
+    <child link="Right_Wheel"/>
+    <axis xyz="0 0 -1"/>
   </joint>
-  <link
-    name="IMU">
+
+  <!-- IMU: no visual/collision — empty STL -->
+  <link name="IMU">
     <inertial>
-      <origin
-        xyz="-0.00102783094917421 8.81609672492741E-05 -0.00159259470994421"
-        rpy="0 0 0" />
-      <mass
-        value="0.000628851677164544" />
-      <inertia
-        ixx="2.84177895500371E-08"
-        ixy="-4.57750731552582E-14"
-        ixz="-3.75278292675403E-14"
-        iyy="1.06612939030682E-08"
-        iyz="4.25878192467272E-14"
-        izz="3.75953504496458E-08" />
+      <origin xyz="-0.00102783094917421 8.81609672492741E-05 -0.00159259470994421" rpy="0 0 0"/>
+      <mass value="0.000628851677164544"/>
+      <inertia ixx="2.84177895500371E-08" ixy="-4.57750731552582E-14" ixz="-3.75278292675403E-14"
+               iyy="1.06612939030682E-08" iyz="4.25878192467272E-14" izz="3.75953504496458E-08"/>
+    </inertial>
+  </link>
+
+  <joint name="IMU" type="fixed">
+    <origin xyz="0.01128 -0.0204 0.037774" rpy="0 0 -1.5708"/>
+    <parent link="base_link"/>
+    <child link="IMU"/>
+    <axis xyz="0 0 0"/>
+  </joint>
+
+  <link name="TOF_Left">
+    <inertial>
+      <origin xyz="-0.00565170024447556 -3.8228667877914E-05 0.00315362395499548" rpy="0 0 0"/>
+      <mass value="0.00645200743611607"/>
+      <inertia ixx="1.14110094887023E-06" ixy="1.0454215407616E-12" ixz="1.19731699891125E-08"
+               iyy="1.99535340907574E-07" iyz="4.76776792329873E-11" izz="1.04339638953449E-06"/>
     </inertial>
     <visual>
-      <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
+      <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh
-          filename="package://open01_description/meshes/IMU.STL" />
+        <mesh filename="package://open01_description/meshes/TOF_Left.stl"/>
       </geometry>
-      <material
-        name="">
-        <color
-          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      <material name="">
+        <color rgba="0.752941176470588 0.752941176470588 0.752941176470588 1"/>
       </material>
     </visual>
     <collision>
-      <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
+      <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh
-          filename="package://open01_description/meshes/IMU.STL" />
+        <mesh filename="package://open01_description/meshes/TOF_Left.stl"/>
       </geometry>
     </collision>
   </link>
-  <joint
-    name="IMU"
-    type="fixed">
-    <origin
-      xyz="0.01128 -0.0204 0.037774"
-      rpy="0 0 -1.5708" />
-    <parent
-      link="base_link" />
-    <child
-      link="IMU" />
-    <axis
-      xyz="0 0 0" />
+
+  <joint name="TOF_Left" type="fixed">
+    <origin xyz="0.084683 0.064317 0.080003" rpy="0 0.075049 1.0472"/>
+    <parent link="base_link"/>
+    <child link="TOF_Left"/>
+    <axis xyz="0 0 0"/>
   </joint>
-  <link
-    name="TOF_Left">
+
+  <link name="TOF_Back">
     <inertial>
-      <origin
-        xyz="-0.00565170024447556 -3.8228667877914E-05 0.00315362395499548"
-        rpy="0 0 0" />
-      <mass
-        value="0.00645200743611607" />
-      <inertia
-        ixx="1.14110094887023E-06"
-        ixy="1.0454215407616E-12"
-        ixz="1.19731699891125E-08"
-        iyy="1.99535340907574E-07"
-        iyz="4.76776792329873E-11"
-        izz="1.04339638953449E-06" />
+      <origin xyz="-0.00565158155130056 -3.82338496927597E-05 0.00315372066936052" rpy="0 0 0"/>
+      <mass value="0.00645226052543333"/>
+      <inertia ixx="1.14114359072285E-06" ixy="1.28751554081921E-12" ixz="1.19652132614046E-08"
+               iyy="1.99535072672847E-07" iyz="4.96446137038613E-11" izz="1.04344578010352E-06"/>
     </inertial>
     <visual>
-      <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
+      <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh
-          filename="package://open01_description/meshes/TOF_Left.STL" />
+        <mesh filename="package://open01_description/meshes/TOF_Back.stl"/>
       </geometry>
-      <material
-        name="">
-        <color
-          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      <material name="">
+        <color rgba="0.752941176470588 0.752941176470588 0.752941176470588 1"/>
       </material>
     </visual>
     <collision>
-      <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
+      <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh
-          filename="package://open01_description/meshes/TOF_Left.STL" />
+        <mesh filename="package://open01_description/meshes/TOF_Back.stl"/>
       </geometry>
     </collision>
   </link>
-  <joint
-    name="TOF_Left"
-    type="fixed">
-    <origin
-      xyz="0.084683 0.064317 0.080003"
-      rpy="0 0.075049 1.0472" />
-    <parent
-      link="base_link" />
-    <child
-      link="TOF_Left" />
-    <axis
-      xyz="0 0 0" />
+
+  <joint name="TOF_Back" type="fixed">
+    <origin xyz="-0.026657 -3.5E-05 0.080003" rpy="0 0.075049 -3.1416"/>
+    <parent link="base_link"/>
+    <child link="TOF_Back"/>
+    <axis xyz="0 0 0"/>
   </joint>
-  <link
-    name="TOF_Back">
+
+  <link name="TOF_Right">
     <inertial>
-      <origin
-        xyz="-0.00565158155130056 -3.82338496927597E-05 0.00315372066936052"
-        rpy="0 0 0" />
-      <mass
-        value="0.00645226052543333" />
-      <inertia
-        ixx="1.14114359072285E-06"
-        ixy="1.28751554081921E-12"
-        ixz="1.19652132614046E-08"
-        iyy="1.99535072672847E-07"
-        iyz="4.96446137038613E-11"
-        izz="1.04344578010352E-06" />
+      <origin xyz="-0.00565169862307091 -3.82320721003457E-05 0.00315362278201137" rpy="0 0 0"/>
+      <mass value="0.00645200983079021"/>
+      <inertia ixx="1.14110164868809E-06" ixy="1.00390468364293E-12" ixz="1.19734623227758E-08"
+               iyy="1.99535573251133E-07" iyz="4.74273589081252E-11" izz="1.04339694295222E-06"/>
     </inertial>
     <visual>
-      <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
+      <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh
-          filename="package://open01_description/meshes/TOF_Back.STL" />
+        <mesh filename="package://open01_description/meshes/TOF_Right.stl"/>
       </geometry>
-      <material
-        name="">
-        <color
-          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      <material name="">
+        <color rgba="0.752941176470588 0.752941176470588 0.752941176470588 1"/>
       </material>
     </visual>
     <collision>
-      <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
+      <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh
-          filename="package://open01_description/meshes/TOF_Back.STL" />
+        <mesh filename="package://open01_description/meshes/TOF_Right.stl"/>
       </geometry>
     </collision>
   </link>
-  <joint
-    name="TOF_Back"
-    type="fixed">
-    <origin
-      xyz="-0.026657 -3.5E-05 0.080003"
-      rpy="0 0.075049 -3.1416" />
-    <parent
-      link="base_link" />
-    <child
-      link="TOF_Back" />
-    <axis
-      xyz="0 0 0" />
+
+  <joint name="TOF_Right" type="fixed">
+    <origin xyz="0.084744 -0.064282 0.080003" rpy="0 0.075049 -1.0472"/>
+    <parent link="base_link"/>
+    <child link="TOF_Right"/>
+    <axis xyz="0 0 0"/>
   </joint>
-  <link
-    name="TOF_Right">
-    <inertial>
-      <origin
-        xyz="-0.00565169862307091 -3.82320721003457E-05 0.00315362278201137"
-        rpy="0 0 0" />
-      <mass
-        value="0.00645200983079021" />
-      <inertia
-        ixx="1.14110164868809E-06"
-        ixy="1.00390468364293E-12"
-        ixz="1.19734623227758E-08"
-        iyy="1.99535573251133E-07"
-        iyz="4.74273589081252E-11"
-        izz="1.04339694295222E-06" />
-    </inertial>
-    <visual>
-      <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
-      <geometry>
-        <mesh
-          filename="package://open01_description/meshes/TOF_Right.STL" />
-      </geometry>
-      <material
-        name="">
-        <color
-          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
-      </material>
-    </visual>
-    <collision>
-      <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
-      <geometry>
-        <mesh
-          filename="package://open01_description/meshes/TOF_Right.STL" />
-      </geometry>
-    </collision>
-  </link>
-  <joint
-    name="TOF_Right"
-    type="fixed">
-    <origin
-      xyz="0.084744 -0.064282 0.080003"
-      rpy="0 0.075049 -1.0472" />
-    <parent
-      link="base_link" />
-    <child
-      link="TOF_Right" />
-    <axis
-      xyz="0 0 0" />
-  </joint>
+
 </robot>
