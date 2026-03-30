@@ -14,6 +14,12 @@ def generate_launch_description():
     with open(urdf_file, 'r') as f:
         robot_description = f.read()
 
+    ekf_config = os.path.join(
+        get_package_share_directory('open01_viz'),
+        'config',
+        'ekf.yaml'
+    )
+
     robot_state_publisher = Node(
         package='robot_state_publisher',
         executable='robot_state_publisher',
@@ -23,6 +29,14 @@ def generate_launch_description():
             'robot_description': robot_description,
             'publish_frequency': 10.0,
         }],
+    )
+
+    ekf_node = Node(
+        package='robot_localization',
+        executable='ekf_node',
+        name='ekf_filter_node',
+        output='screen',
+        parameters=[ekf_config],
     )
 
     rviz2 = Node(
@@ -39,5 +53,6 @@ def generate_launch_description():
 
     return LaunchDescription([
         robot_state_publisher,
+        ekf_node,
         rviz2,
     ])
