@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OPEN-01 Dashboard</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Exo+2:wght@300;400;600;700&display=swap');
+  :root {
+    --bg:      #0a0c0f;
+    --panel:   #0f1318;
+    --border:  #1e2a38;
+    --accent:  #00e5ff;
+    --accent2: #ff6b35;
+    --green:   #39ff14;
+    --warn:    #ffcc00;
+    --danger:  #ff2d55;
+    --text:    #c8d8e8;
+    --muted:   #4a6070;
+    --mono:    'Share Tech Mono', monospace;
+    --sans:    'Exo 2', sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: var(--sans); min-height: 100vh; overflow-x: hidden; }
+  body::after { content: ''; position: fixed; inset: 0; background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.04) 2px, rgba(0,0,0,0.04) 4px); pointer-events: none; z-index: 9999; }
+
+  header { display: flex; align-items: center; justify-content: space-between; padding: 14px 28px; border-bottom: 1px solid var(--border); background: linear-gradient(90deg, rgba(0,229,255,0.05) 0%, transparent 60%); }
+  .logo { font-family: var(--mono); font-size: 1.3rem; color: var(--accent); letter-spacing: 3px; text-transform: uppercase; }
+  .logo span { color: var(--accent2); }
+  .conn-bar { display: flex; align-items: center; gap: 12px; }
+  #ws-url { background: var(--panel); border: 1px solid var(--border); color: var(--text); font-family: var(--mono); font-size: 0.8rem; padding: 6px 10px; border-radius: 4px; width: 220px; outline: none; }
+  #ws-url:focus { border-color: var(--accent); }
+  .btn { font-family: var(--mono); font-size: 0.75rem; letter-spacing: 1px; padding: 6px 16px; border: 1px solid var(--accent); background: transparent; color: var(--accent); cursor: pointer; border-radius: 4px; transition: all 0.15s; text-transform: uppercase; }
+  .btn:hover { background: var(--accent); color: var(--bg); }
+  .status-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--muted); box-shadow: 0 0 6px var(--muted); transition: all 0.3s; }
+  .status-dot.connected { background: var(--green); box-shadow: 0 0 10px var(--green); animation: pulse 2s infinite; }
+  .status-dot.error { background: var(--danger); box-shadow: 0 0 10px var(--danger); }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.5} }
+  #status-text { font-family: var(--mono); font-size: 0.75rem; color: var(--muted); }
+
+  .grid { display: grid; grid-template-columns: 1fr 340px; gap: 16px; padding: 16px 28px; max-width: 1500px; margin: 0 auto; }
+  .left-col { display: flex; flex-direction: column; gap: 16px; }
+  .right-col { display: flex; flex-direction: column; gap: 16px; }
+  .panel { background: var(--panel); border: 1px solid var(--border); border-radius: 6px; overflow: hidden; }
+  .panel-header { display: flex; align-items: center; justify-content: space-between; padding: 10px 16px; border-bottom: 1px solid var(--border); background: rgba(255,255,255,0.02); }
+  .panel-title { font-family: var(--mono); font-size: 0.7rem; letter-spacing: 2px; color: var(--accent); text-transform: uppercase; }
+  .panel-body { padding: 16px; }
+
+  .visuals-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+
+  .topics-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .topic-card { background: var(--bg); border: 1px solid var(--border); border-radius: 4px; padding: 12px; }
+  .topic-name { font-family: var(--mono); font-size: 0.65rem; color: var(--accent); letter-spacing: 1px; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+  .topic-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--muted); flex-shrink: 0; transition: all 0.2s; }
+  .topic-dot.live { background: var(--green); box-shadow: 0 0 6px var(--green); }
+  .topic-data { font-family: var(--mono); font-size: 0.72rem; color: var(--text); line-height: 1.6; }
+  .topic-data .key { color: var(--muted); }
+  .topic-data .val { color: var(--accent2); }
+  .topic-data .val.good { color: var(--green); }
+  .topic-data .val.warn { color: var(--warn); }
+  .topic-data .val.bad  { color: var(--danger); }
+  .battery-bar { height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; margin-top: 6px; }
+  .battery-fill { height: 100%; border-radius: 3px; background: var(--green); transition: width 0.5s, background 0.5s; }
+
+  .dpad { display: grid; grid-template-columns: repeat(3, 68px); grid-template-rows: repeat(3, 68px); gap: 6px; justify-content: center; margin: 12px 0; }
+  .dpad-btn { background: var(--bg); border: 1px solid var(--border); border-radius: 6px; color: var(--text); font-size: 1.3rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.1s; user-select: none; -webkit-user-select: none; }
+  .dpad-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .dpad-btn.pressed { background: rgba(0,229,255,0.15); border-color: var(--accent); color: var(--accent); box-shadow: 0 0 12px rgba(0,229,255,0.3); }
+  .dpad-btn.empty { cursor: default; border-color: transparent; background: transparent; }
+  .dpad-btn.stop-btn { border-color: var(--danger); color: var(--danger); font-size: 0.6rem; font-family: var(--mono); letter-spacing: 1px; }
+  .dpad-btn.stop-btn:hover, .dpad-btn.stop-btn.pressed { background: rgba(255,45,85,0.15); box-shadow: 0 0 12px rgba(255,45,85,0.3); }
+
+  .speed-control { margin-top: 12px; }
+  .speed-label { font-family: var(--mono); font-size: 0.65rem; color: var(--muted); letter-spacing: 1px; display: flex; justify-content: space-between; margin-bottom: 6px; }
+  .speed-label span { color: var(--accent2); }
+  input[type=range] { width: 100%; -webkit-appearance: none; height: 4px; border-radius: 2px; background: var(--border); outline: none; cursor: pointer; }
+  input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 14px; height: 14px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 6px var(--accent); }
+  .vel-display { display: flex; gap: 8px; margin-top: 12px; }
+  .vel-box { flex: 1; background: var(--bg); border: 1px solid var(--border); border-radius: 4px; padding: 8px; text-align: center; }
+  .vel-box .vel-label { font-family: var(--mono); font-size: 0.6rem; color: var(--muted); letter-spacing: 1px; margin-bottom: 4px; }
+  .vel-box .vel-val { font-family: var(--mono); font-size: 1.1rem; color: var(--accent2); }
+  .kbd-hint { margin-top: 12px; padding: 8px 10px; background: var(--bg); border: 1px solid var(--border); border-radius: 4px; font-family: var(--mono); font-size: 0.62rem; color: var(--muted); line-height: 2; }
+  .kbd-hint .k { display: inline-block; background: var(--border); color: var(--text); padding: 1px 6px; border-radius: 3px; border-bottom: 2px solid var(--muted); margin: 0 2px; }
+
+  #log { font-family: var(--mono); font-size: 0.7rem; color: var(--muted); height: 90px; overflow-y: auto; line-height: 1.8; }
+  #log .log-time { color: var(--border); }
+  #log .log-info { color: var(--accent); }
+  #log .log-warn { color: var(--warn); }
+  #log .log-err  { color: var(--danger); }
+
+  @media (max-width: 1000px) { .grid { grid-template-columns: 1fr; padding: 12px; } .visuals-row { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 600px)  { .visuals-row { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">OPEN<span>-01</span> DASHBOARD</div>
+  <div class="conn-bar">
+    <input id="ws-url" type="text" value="ws://192.168.1.102:9090" placeholder="ws://PI_IP:9090">
+    <button class="btn" id="conn-btn" onclick="toggleConnect()">CONNECT</button>
+    <div class="status-dot" id="status-dot"></div>
+    <span id="status-text">DISCONNECTED</span>
+  </div>
+</header>
+
+<div class="grid">
+  <div class="left-col">
+
+    <!-- Visual panels row -->
+    <div class="visuals-row">
+
+      <div class="panel">
+        <div class="panel-header">
+          <span class="panel-title">&#9830; PROXIMITY</span>
+          <div class="topic-dot" id="dot-tof"></div>
+        </div>
+        <div class="panel-body" style="padding:12px;display:flex;flex-direction:column;align-items:center">
+          <canvas id="tof-canvas" width="200" height="200"></canvas>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-header">
+          <span class="panel-title">&#9830; HEADING</span>
+          <div class="topic-dot" id="dot-odom"></div>
+        </div>
+        <div class="panel-body" style="padding:12px;display:flex;flex-direction:column;align-items:center">
+          <canvas id="compass-canvas" width="200" height="200"></canvas>
+          <div style="font-family:var(--mono);font-size:0.85rem;color:var(--accent2);margin-top:8px"><span id="compass-deg">---</span>&deg;</div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-header">
+          <span class="panel-title">&#9830; IMU HORIZON</span>
+          <div class="topic-dot" id="dot-imu"></div>
+        </div>
+        <div class="panel-body" style="padding:12px;display:flex;flex-direction:column;align-items:center">
+          <canvas id="horizon-canvas" width="200" height="200"></canvas>
+          <div style="font-family:var(--mono);font-size:0.7rem;color:var(--muted);margin-top:8px">
+            ax:<span id="h-ax" style="color:var(--accent2)">0.00</span>
+            &nbsp;ay:<span id="h-ay" style="color:var(--accent2)">0.00</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Odometry trail -->
+    <div class="panel">
+      <div class="panel-header">
+        <span class="panel-title">&#9830; ODOMETRY TRAIL</span>
+        <button class="btn" onclick="clearTrail()" style="padding:3px 10px;font-size:0.6rem">CLEAR</button>
+      </div>
+      <div class="panel-body" style="padding:12px">
+        <canvas id="odom-canvas" width="800" height="180" style="width:100%;height:180px"></canvas>
+      </div>
+    </div>
+
+    <!-- Sensor data -->
+    <div class="panel">
+      <div class="panel-header">
+        <span class="panel-title">&#9830; SENSOR DATA</span>
+        <span id="hz-display" style="font-family:var(--mono);font-size:0.65rem;color:var(--muted)">--</span>
+      </div>
+      <div class="panel-body">
+        <div class="topics-grid">
+          <div class="topic-card">
+            <div class="topic-name"><div class="topic-dot" id="dot-odom2"></div>/odom</div>
+            <div class="topic-data">
+              <div><span class="key">pos.x  </span> <span class="val" id="odom-x">---</span> m</div>
+              <div><span class="key">pos.y  </span> <span class="val" id="odom-y">---</span> m</div>
+              <div><span class="key">yaw    </span> <span class="val" id="odom-yaw">---</span> &deg;</div>
+              <div><span class="key">vel.x  </span> <span class="val" id="odom-vx">---</span> m/s</div>
+              <div><span class="key">vel.z  </span> <span class="val" id="odom-wz">---</span> r/s</div>
+            </div>
+          </div>
+          <div class="topic-card">
+            <div class="topic-name"><div class="topic-dot" id="dot-imu2"></div>/imu/data</div>
+            <div class="topic-data">
+              <div><span class="key">accel.x</span> <span class="val" id="imu-ax">---</span> m/s&sup2;</div>
+              <div><span class="key">accel.y</span> <span class="val" id="imu-ay">---</span> m/s&sup2;</div>
+              <div><span class="key">accel.z</span> <span class="val" id="imu-az">---</span> m/s&sup2;</div>
+              <div><span class="key">gyro.z </span> <span class="val" id="imu-gz">---</span> r/s</div>
+            </div>
+          </div>
+          <div class="topic-card">
+            <div class="topic-name"><div class="topic-dot" id="dot-bat"></div>/battery_state</div>
+            <div class="topic-data">
+              <div><span class="key">voltage</span> <span class="val" id="bat-v">---</span> V</div>
+              <div><span class="key">percent</span> <span class="val" id="bat-pct">---</span> %</div>
+              <div class="battery-bar"><div class="battery-fill" id="bat-bar" style="width:0%"></div></div>
+            </div>
+          </div>
+          <div class="topic-card">
+            <div class="topic-name"><div class="topic-dot" id="dot-tof2"></div>/tof/*</div>
+            <div class="topic-data">
+              <div><span class="key">left   </span> <span class="val" id="tof-l">---</span> mm</div>
+              <div><span class="key">back   </span> <span class="val" id="tof-b">---</span> mm</div>
+              <div><span class="key">right  </span> <span class="val" id="tof-r">---</span> mm</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Log -->
+    <div class="panel">
+      <div class="panel-header">
+        <span class="panel-title">&#9830; LOG</span>
+        <button class="btn" onclick="clearLog()" style="padding:3px 10px;font-size:0.6rem">CLEAR</button>
+      </div>
+      <div class="panel-body" style="padding:10px 16px"><div id="log"></div></div>
+    </div>
+
+  </div><!-- end left-col -->
+
+  <!-- Teleop -->
+  <div class="right-col">
+    <div class="panel">
+      <div class="panel-header">
+        <span class="panel-title">&#9830; TELEOP</span>
+        <span id="teleop-status" style="font-family:var(--mono);font-size:0.65rem;color:var(--muted)">IDLE</span>
+      </div>
+      <div class="panel-body">
+        <div class="dpad">
+          <div class="dpad-btn empty"></div>
+          <div class="dpad-btn" id="btn-fwd"   onmousedown="startCmd('w')" onmouseup="stopCmd()" ontouchstart="startCmd('w')" ontouchend="stopCmd()">&#9650;</div>
+          <div class="dpad-btn empty"></div>
+          <div class="dpad-btn" id="btn-left"  onmousedown="startCmd('a')" onmouseup="stopCmd()" ontouchstart="startCmd('a')" ontouchend="stopCmd()">&#9664;</div>
+          <div class="dpad-btn stop-btn"        onmousedown="startCmd('stop')" onmouseup="stopCmd()" ontouchstart="startCmd('stop')" ontouchend="stopCmd()">STOP</div>
+          <div class="dpad-btn" id="btn-right" onmousedown="startCmd('d')" onmouseup="stopCmd()" ontouchstart="startCmd('d')" ontouchend="stopCmd()">&#9654;</div>
+          <div class="dpad-btn empty"></div>
+          <div class="dpad-btn" id="btn-bwd"   onmousedown="startCmd('s')" onmouseup="stopCmd()" ontouchstart="startCmd('s')" ontouchend="stopCmd()">&#9660;</div>
+          <div class="dpad-btn empty"></div>
+        </div>
+        <div class="vel-display">
+          <div class="vel-box"><div class="vel-label">LINEAR</div><div class="vel-val" id="out-linear">0.00</div></div>
+          <div class="vel-box"><div class="vel-label">ANGULAR</div><div class="vel-val" id="out-angular">0.00</div></div>
+        </div>
+        <div class="speed-control" style="margin-top:16px">
+          <div class="speed-label">LINEAR SPEED <span id="lin-val">0.20</span> m/s</div>
+          <input type="range" id="lin-speed" min="0.05" max="0.5" step="0.05" value="0.20" oninput="document.getElementById('lin-val').textContent=parseFloat(this.value).toFixed(2)">
+        </div>
+        <div class="speed-control" style="margin-top:10px">
+          <div class="speed-label">ANGULAR SPEED <span id="ang-val">0.80</span> r/s</div>
+          <input type="range" id="ang-speed" min="0.1" max="2.0" step="0.1" value="0.80" oninput="document.getElementById('ang-val').textContent=parseFloat(this.value).toFixed(2)">
+        </div>
+        <div class="kbd-hint">
+          <span class="k">W</span> fwd &nbsp;<span class="k">S</span> back &nbsp;<span class="k">A</span> left &nbsp;<span class="k">D</span> right<br>
+          <span class="k">SPACE</span> emergency stop
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── State ──────────────────────────────────────────────────────────────────
+let ros = null, connected = false, cmdInterval = null, currentCmd = null, heartbeatInterval = null;
+let currentYaw = 0;
+let tofL = 0, tofR = 0, tofB = 0;
+const trail = [];
+const MAX_TRAIL = 600;
+let trailBounds = { minX: -1, maxX: 1, minY: -1, maxY: 1 };
+
+// ── Log ────────────────────────────────────────────────────────────────────
+function log(msg, type='info') {
+  const el = document.getElementById('log');
+  const t = new Date().toLocaleTimeString('en',{hour12:false,hour:'2-digit',minute:'2-digit',second:'2-digit'});
+  const line = document.createElement('div');
+  line.innerHTML = `<span class="log-time">[${t}]</span> <span class="log-${type}">${msg}</span>`;
+  el.appendChild(line);
+  el.scrollTop = el.scrollHeight;
+  if (el.children.length > 100) el.removeChild(el.firstChild);
+}
+function clearLog() { document.getElementById('log').innerHTML = ''; }
+
+// ── Connection ─────────────────────────────────────────────────────────────
+function toggleConnect() { connected ? disconnect() : connect(); }
+
+function connect() {
+  const url = document.getElementById('ws-url').value.trim();
+  log(`Connecting to ${url}...`);
+  setStatus('connecting');
+  ros = new WebSocket(url);
+  ros.onopen = () => {
+    connected = true; setStatus('connected'); log('Connected to rosbridge', 'info');
+    document.getElementById('conn-btn').textContent = 'DISCONNECT';
+    subscribe(); startHeartbeat();
+  };
+  ros.onerror = () => { setStatus('error'); log('WebSocket error — is rosbridge running on the Pi?', 'err'); };
+  ros.onclose = () => {
+    connected = false; setStatus('disconnected'); log('Disconnected', 'warn');
+    document.getElementById('conn-btn').textContent = 'CONNECT';
+    unsubscribeAll(); stopHeartbeat();
+  };
+  ros.onmessage = (evt) => { try { handleMsg(JSON.parse(evt.data)); } catch(e) {} };
+}
+function disconnect() { if (ros) ros.close(); }
+
+function setStatus(s) {
+  const dot = document.getElementById('status-dot'), txt = document.getElementById('status-text');
+  dot.className = 'status-dot';
+  if (s === 'connected')    { dot.classList.add('connected'); txt.textContent='CONNECTED';   txt.style.color='var(--green)'; }
+  else if (s === 'error')   { dot.classList.add('error');     txt.textContent='ERROR';       txt.style.color='var(--danger)'; }
+  else if (s === 'connecting') {                               txt.textContent='CONNECTING…';txt.style.color='var(--warn)'; }
+  else                      {                                  txt.textContent='DISCONNECTED';txt.style.color='var(--muted)'; }
+}
+
+// ── rosbridge ──────────────────────────────────────────────────────────────
+function send(obj) { if (ros && ros.readyState === WebSocket.OPEN) ros.send(JSON.stringify(obj)); }
+
+function subscribe() {
+  [
+    { topic: '/odom',          type: 'nav_msgs/Odometry',        throttle: 100 },
+    { topic: '/imu/data',      type: 'sensor_msgs/Imu',          throttle: 100 },
+    { topic: '/battery_state', type: 'sensor_msgs/BatteryState', throttle: 1000 },
+    { topic: '/tof/left',      type: 'sensor_msgs/Range',        throttle: 100 },
+    { topic: '/tof/back',      type: 'sensor_msgs/Range',        throttle: 100 },
+    { topic: '/tof/right',     type: 'sensor_msgs/Range',        throttle: 100 },
+  ].forEach(t => {
+    send({ op: 'subscribe', topic: t.topic, type: t.type, throttle_rate: t.throttle, queue_length: 1 });
+    log(`Subscribed to ${t.topic}`);
+  });
+}
+
+function unsubscribeAll() {
+  ['/odom','/imu/data','/battery_state','/tof/left','/tof/back','/tof/right'].forEach(t => send({ op:'unsubscribe', topic:t }));
+}
+
+// ── Messages ───────────────────────────────────────────────────────────────
+function handleMsg(msg) {
+  if (msg.op !== 'publish') return;
+  const topic = msg.topic, d = msg.msg;
+
+  if (topic === '/odom') {
+    const p = d.pose.pose.position, q = d.pose.pose.orientation;
+    const yaw = Math.atan2(2*(q.w*q.z + q.x*q.y), 1 - 2*(q.y*q.y + q.z*q.z));
+    currentYaw = yaw;
+    setText('odom-x',   p.x.toFixed(3));
+    setText('odom-y',   p.y.toFixed(3));
+    setText('odom-yaw', (yaw * 180/Math.PI).toFixed(1));
+    setText('odom-vx',  d.twist.twist.linear.x.toFixed(3));
+    setText('odom-wz',  d.twist.twist.angular.z.toFixed(3));
+    flashDot('dot-odom'); flashDot('dot-odom2');
+    trail.push({ x: p.x, y: p.y });
+    if (trail.length > MAX_TRAIL) trail.shift();
+    trailBounds.minX = Math.min(trailBounds.minX, p.x - 0.5);
+    trailBounds.maxX = Math.max(trailBounds.maxX, p.x + 0.5);
+    trailBounds.minY = Math.min(trailBounds.minY, p.y - 0.5);
+    trailBounds.maxY = Math.max(trailBounds.maxY, p.y + 0.5);
+    drawCompass(yaw); drawTrail();
+  }
+  else if (topic === '/imu/data') {
+    const a = d.linear_acceleration, g = d.angular_velocity;
+    setText('imu-ax', a.x.toFixed(2)); setText('h-ax', a.x.toFixed(2));
+    setText('imu-ay', a.y.toFixed(2)); setText('h-ay', a.y.toFixed(2));
+    setText('imu-az', a.z.toFixed(2));
+    setText('imu-gz', g.z.toFixed(3));
+    flashDot('dot-imu'); flashDot('dot-imu2');
+    drawHorizon(a.x, a.y);
+  }
+  else if (topic === '/battery_state') {
+    const v = d.voltage, pct = d.percentage !== undefined ? d.percentage * 100 : null;
+    setText('bat-v', v.toFixed(2));
+    setText('bat-pct', pct !== null ? pct.toFixed(0) : '---');
+    const p2 = pct !== null ? Math.min(100, Math.max(0, pct)) : 0;
+    const fill = document.getElementById('bat-bar');
+    fill.style.width = p2 + '%';
+    fill.style.background = p2 > 50 ? 'var(--green)' : p2 > 25 ? 'var(--warn)' : 'var(--danger)';
+    document.getElementById('bat-v').className = 'val' + (v > 10.5 ? ' good' : v > 9.5 ? ' warn' : ' bad');
+    flashDot('dot-bat');
+  }
+  else if (topic === '/tof/left')  { tofL = d.range * 1000; setText('tof-l', tofL.toFixed(0)); flashDot('dot-tof'); flashDot('dot-tof2'); drawToF(); }
+  else if (topic === '/tof/back')  { tofB = d.range * 1000; setText('tof-b', tofB.toFixed(0)); flashDot('dot-tof'); flashDot('dot-tof2'); drawToF(); }
+  else if (topic === '/tof/right') { tofR = d.range * 1000; setText('tof-r', tofR.toFixed(0)); flashDot('dot-tof'); flashDot('dot-tof2'); drawToF(); }
+}
+
+function setText(id, val) { const el = document.getElementById(id); if (el) el.textContent = val; }
+const dotTimers = {};
+function flashDot(id) {
+  const el = document.getElementById(id); if (!el) return;
+  el.classList.add('live'); clearTimeout(dotTimers[id]);
+  dotTimers[id] = setTimeout(() => el.classList.remove('live'), 500);
+}
+
+// ── ToF Radar ─────────────────────────────────────────────────────────────
+function drawToF() {
+  const canvas = document.getElementById('tof-canvas');
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height, cx = W/2, cy = H/2;
+  const MAX_MM = 1200, scale = (H/2 - 20) / MAX_MM;
+  ctx.clearRect(0, 0, W, H);
+
+  // Grid rings
+  [300,600,900,1200].forEach(r => {
+    const pr = r * scale;
+    ctx.beginPath(); ctx.arc(cx, cy, pr, 0, Math.PI*2);
+    ctx.strokeStyle = 'rgba(30,42,56,0.8)'; ctx.lineWidth = 1; ctx.stroke();
+    ctx.fillStyle = '#4a6070'; ctx.font = '9px Share Tech Mono';
+    ctx.textAlign = 'left'; ctx.fillText(r+'mm', cx + pr + 2, cy - 3);
+  });
+
+  // Crosshairs
+  ctx.strokeStyle = 'rgba(30,42,56,0.5)'; ctx.lineWidth = 0.5;
+  ctx.beginPath(); ctx.moveTo(cx, 8); ctx.lineTo(cx, H-8); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(8, cy); ctx.lineTo(W-8, cy); ctx.stroke();
+
+  // Robot body
+  ctx.fillStyle = 'rgba(0,229,255,0.12)'; ctx.strokeStyle = 'rgba(0,229,255,0.6)'; ctx.lineWidth = 1.5;
+  ctx.beginPath(); ctx.roundRect(cx-14, cy-18, 28, 36, 4); ctx.fill(); ctx.stroke();
+
+  // Forward arrow
+  ctx.strokeStyle = 'rgba(0,229,255,0.8)'; ctx.lineWidth = 1.5;
+  ctx.beginPath(); ctx.moveTo(cx, cy-18); ctx.lineTo(cx, cy-28); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(cx-4, cy-24); ctx.lineTo(cx, cy-28); ctx.lineTo(cx+4, cy-24); ctx.stroke();
+
+  // Sensors
+  [
+    { mm: tofL, angle: -Math.PI/2, color: '#00e5ff' },
+    { mm: tofR, angle:  Math.PI/2, color: '#00e5ff' },
+    { mm: tofB, angle:  Math.PI,   color: '#ff6b35' },
+  ].forEach(s => {
+    const dist = Math.min(s.mm || 0, MAX_MM);
+    const pr = dist * scale;
+    const ex = cx + Math.cos(s.angle) * pr, ey = cy + Math.sin(s.angle) * pr;
+    const grad = ctx.createLinearGradient(cx, cy, ex, ey);
+    grad.addColorStop(0, s.color + '33'); grad.addColorStop(1, s.color + 'cc');
+    ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(ex, ey);
+    ctx.strokeStyle = grad; ctx.lineWidth = 2; ctx.stroke();
+    ctx.beginPath(); ctx.arc(ex, ey, 5, 0, Math.PI*2);
+    ctx.fillStyle = s.color; ctx.fill();
+    const lx = cx + Math.cos(s.angle) * (pr + 16), ly = cy + Math.sin(s.angle) * (pr + 16);
+    ctx.fillStyle = s.color; ctx.font = 'bold 10px Share Tech Mono';
+    ctx.textAlign = 'center';
+    ctx.fillText(s.mm > 0 ? s.mm.toFixed(0) : '---', lx, ly + 4);
+    ctx.textAlign = 'left';
+  });
+}
+
+// ── Compass ────────────────────────────────────────────────────────────────
+function drawCompass(yaw) {
+  const canvas = document.getElementById('compass-canvas');
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height, cx = W/2, cy = H/2, r = W/2 - 12;
+  ctx.clearRect(0, 0, W, H);
+
+  ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI*2);
+  ctx.strokeStyle = '#1e2a38'; ctx.lineWidth = 2; ctx.stroke();
+
+  for (let i = 0; i < 36; i++) {
+    const a = (i/36) * Math.PI*2 - Math.PI/2;
+    const inner = i%9===0 ? r-14 : i%3===0 ? r-8 : r-5;
+    ctx.beginPath();
+    ctx.moveTo(cx + Math.cos(a)*(r-2), cy + Math.sin(a)*(r-2));
+    ctx.lineTo(cx + Math.cos(a)*inner,  cy + Math.sin(a)*inner);
+    ctx.strokeStyle = i%9===0 ? '#c8d8e8' : '#1e2a38';
+    ctx.lineWidth = i%9===0 ? 1.5 : 0.8; ctx.stroke();
+  }
+
+  ctx.font = 'bold 11px Share Tech Mono'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  [['N',0],['E',Math.PI/2],['S',Math.PI],['W',-Math.PI/2]].forEach(([l,a]) => {
+    const lx = cx + Math.cos(a - Math.PI/2)*(r-22), ly = cy + Math.sin(a - Math.PI/2)*(r-22);
+    ctx.fillStyle = l==='N' ? '#ff2d55' : '#4a6070'; ctx.fillText(l, lx, ly);
+  });
+
+  ctx.save(); ctx.translate(cx, cy); ctx.rotate(yaw);
+  ctx.beginPath(); ctx.moveTo(0, -(r-30)); ctx.lineTo(-6, 0); ctx.lineTo(6, 0); ctx.closePath();
+  ctx.fillStyle = '#ff2d55'; ctx.fill();
+  ctx.beginPath(); ctx.moveTo(0, r-30); ctx.lineTo(-6, 0); ctx.lineTo(6, 0); ctx.closePath();
+  ctx.fillStyle = '#1e2a38'; ctx.fill();
+  ctx.restore();
+
+  ctx.beginPath(); ctx.arc(cx, cy, 5, 0, Math.PI*2); ctx.fillStyle = '#00e5ff'; ctx.fill();
+  setText('compass-deg', ((yaw * 180/Math.PI + 360) % 360).toFixed(1));
+}
+
+// ── Artificial Horizon ────────────────────────────────────────────────────
+function drawHorizon(ax, ay) {
+  const canvas = document.getElementById('horizon-canvas');
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height, cx = W/2, cy = H/2, r = W/2 - 10;
+  ctx.clearRect(0, 0, W, H);
+  ctx.save(); ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI*2); ctx.clip();
+  const roll = Math.atan2(ay, 9.81) * 2, pitch = Math.atan2(ax, 9.81) * 2;
+  const pitchPx = pitch * (H/2) * 2;
+  ctx.save(); ctx.translate(cx, cy); ctx.rotate(roll);
+  ctx.fillStyle = '#0d2137'; ctx.fillRect(-W, -H - pitchPx, W*2, H*2);
+  ctx.fillStyle = '#1a0a00'; ctx.fillRect(-W, -pitchPx, W*2, H*2);
+  ctx.strokeStyle = '#ff6b35'; ctx.lineWidth = 2;
+  ctx.beginPath(); ctx.moveTo(-W, -pitchPx); ctx.lineTo(W, -pitchPx); ctx.stroke();
+  for (let i = -3; i <= 3; i++) {
+    if (i === 0) continue;
+    const py = -pitchPx + i * 20;
+    ctx.strokeStyle = 'rgba(200,216,232,0.25)'; ctx.lineWidth = 0.8;
+    ctx.beginPath(); ctx.moveTo(-30, py); ctx.lineTo(30, py); ctx.stroke();
+  }
+  ctx.restore(); ctx.restore();
+  ctx.strokeStyle = '#ffcc00'; ctx.lineWidth = 2;
+  ctx.beginPath(); ctx.moveTo(cx-40, cy); ctx.lineTo(cx-15, cy); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(cx+15, cy); ctx.lineTo(cx+40, cy); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(cx, cy-8); ctx.lineTo(cx, cy+8); ctx.stroke();
+  ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI*2);
+  ctx.strokeStyle = '#1e2a38'; ctx.lineWidth = 2; ctx.stroke();
+}
+
+// ── Odometry Trail ────────────────────────────────────────────────────────
+function clearTrail() {
+  trail.length = 0; trailBounds = { minX:-1, maxX:1, minY:-1, maxY:1 }; drawTrail();
+}
+
+function drawTrail() {
+  const canvas = document.getElementById('odom-canvas');
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+  ctx.clearRect(0, 0, W, H);
+  if (trail.length === 0) {
+    ctx.fillStyle = '#1e2a38'; ctx.font = '12px Share Tech Mono';
+    ctx.textAlign = 'center'; ctx.fillText('No odometry data yet', W/2, H/2); return;
+  }
+  const rangeX = Math.max(trailBounds.maxX - trailBounds.minX, 1);
+  const rangeY = Math.max(trailBounds.maxY - trailBounds.minY, 1);
+  const pad = 30;
+  const toX = x => pad + ((x - trailBounds.minX) / rangeX) * (W - pad*2);
+  const toY = y => H - pad - ((y - trailBounds.minY) / rangeY) * (H - pad*2);
+
+  ctx.strokeStyle = 'rgba(30,42,56,0.5)'; ctx.lineWidth = 0.5;
+  for (let i = 0; i <= 4; i++) {
+    const x = pad + (i/4)*(W-pad*2), y = pad + (i/4)*(H-pad*2);
+    ctx.beginPath(); ctx.moveTo(x, pad); ctx.lineTo(x, H-pad); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(pad, y); ctx.lineTo(W-pad, y); ctx.stroke();
+  }
+
+  if (trail.length > 1) {
+    for (let i = 1; i < trail.length; i++) {
+      const t = i / trail.length;
+      ctx.beginPath();
+      ctx.moveTo(toX(trail[i-1].x), toY(trail[i-1].y));
+      ctx.lineTo(toX(trail[i].x),   toY(trail[i].y));
+      ctx.strokeStyle = `rgba(0,229,255,${0.15 + t*0.85})`;
+      ctx.lineWidth = 1.5; ctx.stroke();
+    }
+  }
+
+  ctx.beginPath(); ctx.arc(toX(trail[0].x), toY(trail[0].y), 4, 0, Math.PI*2);
+  ctx.fillStyle = '#4a6070'; ctx.fill();
+
+  const last = trail[trail.length-1];
+  ctx.beginPath(); ctx.arc(toX(last.x), toY(last.y), 6, 0, Math.PI*2);
+  ctx.fillStyle = '#00e5ff'; ctx.shadowColor = '#00e5ff'; ctx.shadowBlur = 10;
+  ctx.fill(); ctx.shadowBlur = 0;
+
+  ctx.fillStyle = '#4a6070'; ctx.font = '9px Share Tech Mono';
+  ctx.textAlign = 'left'; ctx.fillText(trailBounds.minX.toFixed(1)+'m', pad, H-5);
+  ctx.textAlign = 'right'; ctx.fillText(trailBounds.maxX.toFixed(1)+'m', W-pad, H-5);
+}
+
+// ── Teleop ─────────────────────────────────────────────────────────────────
+const pressedKeys = new Set();
+document.addEventListener('keydown', e => {
+  const k = e.key.toLowerCase();
+  if (['w','s','a','d',' '].includes(k) && !pressedKeys.has(k)) {
+    pressedKeys.add(k);
+    startCmd(k === ' ' ? 'stop' : k);
+    const btnId = {w:'btn-fwd',s:'btn-bwd',a:'btn-left',d:'btn-right'}[k];
+    if (btnId) document.getElementById(btnId)?.classList.add('pressed');
+    if (k === ' ') e.preventDefault();
+  }
+});
+document.addEventListener('keyup', e => {
+  const k = e.key.toLowerCase();
+  if (['w','s','a','d',' '].includes(k)) {
+    pressedKeys.delete(k);
+    if (pressedKeys.size === 0) stopCmd();
+    const btnId = {w:'btn-fwd',s:'btn-bwd',a:'btn-left',d:'btn-right'}[k];
+    if (btnId) document.getElementById(btnId)?.classList.remove('pressed');
+  }
+});
+
+function startCmd(action) {
+  currentCmd = action; sendVel();
+  if (!cmdInterval) cmdInterval = setInterval(sendVel, 100);
+}
+function stopCmd() {
+  currentCmd = null; clearInterval(cmdInterval); cmdInterval = null;
+  publishCmdVel(0, 0);
+  document.getElementById('teleop-status').textContent = 'IDLE';
+  document.getElementById('teleop-status').style.color = 'var(--muted)';
+}
+function startHeartbeat() {
+  if (heartbeatInterval) return;
+  heartbeatInterval = setInterval(() => { if (!currentCmd && connected) publishCmdVel(0, 0); }, 200);
+}
+function stopHeartbeat() { clearInterval(heartbeatInterval); heartbeatInterval = null; }
+
+function sendVel() {
+  const lin = parseFloat(document.getElementById('lin-speed').value);
+  const ang = parseFloat(document.getElementById('ang-speed').value);
+  let lx = 0, az = 0;
+  if (currentCmd==='w') lx=lin; else if (currentCmd==='s') lx=-lin;
+  else if (currentCmd==='a') az=ang; else if (currentCmd==='d') az=-ang;
+  publishCmdVel(lx, az);
+  document.getElementById('teleop-status').textContent = currentCmd ? currentCmd.toUpperCase() : 'IDLE';
+  document.getElementById('teleop-status').style.color = currentCmd ? 'var(--accent2)' : 'var(--muted)';
+}
+
+function publishCmdVel(linear, angular) {
+  document.getElementById('out-linear').textContent  = linear.toFixed(2);
+  document.getElementById('out-angular').textContent = angular.toFixed(2);
+  send({ op:'publish', topic:'/cmd_vel', type:'geometry_msgs/Twist',
+    msg:{ linear:{x:linear,y:0,z:0}, angular:{x:0,y:0,z:angular} } });
+}
+
+// ── Init ───────────────────────────────────────────────────────────────────
+drawToF(); drawCompass(0); drawHorizon(0, 0); drawTrail();
+log('OPEN-01 Dashboard ready', 'info');
+log('Update the IP address above then click CONNECT', 'warn');
+</script>
+</body>
+</html>
