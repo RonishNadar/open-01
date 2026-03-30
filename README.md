@@ -7,6 +7,7 @@ This repository contains the full stack:
 - ROS2 serial bridge and bringup for Raspberry Pi 3B
 - URDF robot description with STL meshes
 - RViz2 visualization stack for the dev laptop
+- robot_localization EKF for sensor fusion
 - Linux setup scripts for both machines
 
 ---
@@ -19,7 +20,7 @@ The platform is structured around two compute nodes:
 
 - **ESP32-S2** — handles all real-time firmware: sensors, motors, odometry, and UART telemetry
 - **Raspberry Pi 3B** — runs ROS2 Humble, bridges ESP32 telemetry to ROS2 topics, and relays lidar data
-- **Laptop** — runs SLAM, EKF, Nav2, and RViz2 visualization over WiFi
+- **Laptop** — runs EKF, SLAM, Nav2, and RViz2 visualization over WiFi
 
 ---
 
@@ -35,13 +36,13 @@ The platform is structured around two compute nodes:
 
 ### ROS2 Stack (Raspberry Pi 3B — ROS2 Humble)
 - **Serial bridge node** — parses ESP32 binary protocol, publishes all sensor topics
-- **Lidar node** — LDS-02 lidar via USB2LDS adapter, publishes `/scan`
+- **Lidar node** — LDS-02 lidar via USB2LDS adapter, publishes `/scan` *(in progress)*
 - **robot_state_publisher** — broadcasts full TF tree from URDF
 - **Systemd autostart** — `open01.service` brings up the full stack on boot
 
 ### ROS2 Stack (Laptop — ROS2 Jazzy)
 - **RViz2 visualization** — CAD model, TF frames, odometry, lidar scan
-- **robot_localization EKF** — fuses odometry + IMU *(in progress)*
+- **robot_localization EKF** — fuses `/odom` + `/imu/data` → `/odometry/filtered` at 30Hz
 - **SLAM Toolbox** — *(planned)*
 - **Nav2** — *(planned)*
 
@@ -56,6 +57,7 @@ The platform is structured around two compute nodes:
 | `/tof/back` | `sensor_msgs/Range` | Serial bridge |
 | `/scan` | `sensor_msgs/LaserScan` | Lidar node |
 | `/joint_states` | `sensor_msgs/JointState` | Serial bridge |
+| `/odometry/filtered` | `nav_msgs/Odometry` | EKF node |
 | `/cmd_vel` | `geometry_msgs/Twist` | Nav2 / teleop |
 
 ---
@@ -110,10 +112,10 @@ open-01/
 ├── robot_ros2/
 │   └── ros2_ws/
 │       └── src/
-│           ├── open01_serial_bridge/   # ESP32 ↔ ROS2 bridge + lidar node
+│           ├── open01_serial_bridge/   # ESP32 <-> ROS2 bridge + lidar node
 │           ├── open01_bringup/         # RPi launch files
 │           ├── open01_description/     # URDF + STL meshes
-│           └── open01_viz/             # Laptop RViz2 launch + config
+│           └── open01_viz/             # Laptop RViz2 launch + EKF config
 ├── cad/
 │   └── URDFs/                   # SolidWorks URDF export (source)
 ├── scripts/
@@ -173,11 +175,19 @@ source install/setup.bash
 ros2 launch open01_bringup bringup.launch.py
 ```
 
-### Visualization on laptop
+### Visualization + EKF on laptop
 ```bash
 cd ~/open-01/robot_ros2/ros2_ws
 source install/setup.bash
 ros2 launch open01_viz viz.launch.py
+```
+
+### Verify topics
+```bash
+ros2 topic list
+ros2 topic hz /odometry/filtered   # should be ~30Hz
+ros2 topic hz /odom                # should be ~40Hz
+ros2 topic hz /scan                # should be ~5Hz
 ```
 
 ### Verify TF tree
@@ -191,19 +201,19 @@ ros2 run tf2_tools view_frames
 
 ```
 ESP32-S2 (firmware)
-    │  UART 460800 baud (custom binary protocol, CRC16-CCITT)
-    ▼
+    |  UART 460800 baud (custom binary protocol, CRC16-CCITT)
+    v
 Raspberry Pi 3B (ROS2 Humble)
-    ├── open01_serial_bridge  →  /odom /imu/data /battery_state /tof/* /joint_states
-    ├── lidar_node            →  /scan
-    └── robot_state_publisher →  /tf /tf_static
-    │  WiFi (DDS, ROS_DOMAIN_ID=0)
-    ▼
+    |-- open01_serial_bridge  ->  /odom /imu/data /battery_state /tof/* /joint_states
+    |-- lidar_node            ->  /scan
+    |-- robot_state_publisher ->  /tf /tf_static
+    |  WiFi (DDS, ROS_DOMAIN_ID=0)
+    v
 Laptop (ROS2 Jazzy)
-    ├── robot_localization EKF
-    ├── SLAM Toolbox
-    ├── Nav2
-    └── RViz2
+    |-- robot_localization EKF  ->  /odometry/filtered
+    |-- SLAM Toolbox            ->  /map (planned)
+    |-- Nav2                    ->  autonomous navigation (planned)
+    |-- RViz2                   ->  visualization
 ```
 
 ---
@@ -239,6 +249,7 @@ FreeRTOS task entry points for periodic runtime behavior. All tasks pinned to Co
 - **LDS-02 checksum** is `(~sum(bytes[0:40])) & 0xFF`, `INDEX_MAX=0xDB`
 - **Serial port** on Ubuntu 22.04 RPi is `/dev/ttyS0` (not `/dev/ttyAMA0`)
 - **ROS2 QoS** — RPi nodes publish `BEST_EFFORT`, set RViz2 subscriptions to match
+- **EKF** — IMU orientation not fused (MPU6500 has no magnetometer), only `vyaw`, `ax`, `ay` used from IMU
 
 ---
 
@@ -256,14 +267,14 @@ FreeRTOS task entry points for periodic runtime behavior. All tasks pinned to Co
 - [x] Linux setup script + GUI launcher
 
 ### ROS2
-- [x] Serial bridge node (ESP32 ↔ ROS2)
-- [x] LDS-02 lidar node
+- [x] Serial bridge node (ESP32 <-> ROS2)
+- [~] LDS-02 lidar node *(in progress — lidar bring-up)*
 - [x] URDF robot description
 - [x] TF tree (all frames)
 - [x] RViz2 visualization
 - [x] Systemd autostart
 - [x] Setup scripts (RPi + laptop)
-- [ ] robot_localization EKF
+- [x] robot_localization EKF (fusing /odom + /imu/data)
 - [ ] SLAM Toolbox
 - [ ] Nav2
 - [ ] PID gain tuning
