@@ -88,3 +88,11 @@ Thumbs.db
 *.000
 *.bak
 fp-info-cache
+pcb/open-01-pcb/open-01-pcb-backups/
+pcb/open-01-pcb/.history
+pcb/open-01-pcb/*.lck
+~*.lck
+*.lck
+**/.history
+.history
+pcb/open-01-pcb/.history/
