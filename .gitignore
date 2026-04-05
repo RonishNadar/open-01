@@ -82,3 +82,9 @@ log/
 # OS
 .DS_Store
 Thumbs.db
+
+*-cache.lib
+*_autosave*
+*.000
+*.bak
+fp-info-cache
