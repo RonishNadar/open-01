@@ -105,7 +105,7 @@
 #define STACK_IMU             4096
 #define STACK_TOF             4096
 #define STACK_BATTERY         2048
-#define STACK_COMMS           8192             // Comms task stack size
+#define STACK_COMMS           8192             // Larger for micro-ROS
 
 // ── Task Priorities (higher = more urgent) ───────────────────
 #define PRIO_MOTOR            5
